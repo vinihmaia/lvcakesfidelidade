@@ -109,7 +109,7 @@
   <button id="enviar" style="margin-top:20px;width:100%;height:80px;border-radius:999px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;gap:12px;font-size:28px;letter-spacing:-0.04em">
     <i class="ti ti-brand-whatsapp" aria-hidden="true"></i><span id="enviar-txt">Enviar pedido</span></button>
   <div class="err" id="e-enviar" style="margin-top:8px;text-align:center"></div>
-  <div id="ok-envio" style="display:none;margin-top:8px;text-align:center;font-size:14px;color:var(--soft)">Seu carimbo aparece quando o pedido for entregue.</div>
+  <div id="ok-envio" style="display:none;margin-top:8px;text-align:center;font-size:14px;color:var(--soft)">Pedido registrado. Seu carimbo já está no cartão.</div>
 
   <div id="pix" style="display:none;margin-top:18px;border:1.5px solid var(--gold);border-radius:20px;padding:18px">
     <div style="font-size:14px;color:var(--soft)">Pague com Pix</div>
@@ -186,7 +186,7 @@
     let txt;
     if (!cartao) {
       txt = db ? "Escolha o bloco e digite o apartamento no pedido para ver seus carimbos."
-               : "Cada pedido entregue vale um carimbo.";
+               : "Cada pedido vale um carimbo.";
     } else if (b > 0) {
       txt = `Você tem ${b} pote${b > 1 ? "s" : ""} grátis. Use no pedido abaixo.`;
     } else {
@@ -338,7 +338,7 @@
 
     let { desc, total } = calc();
     const troco = $("troco").value.trim();
-    let pedidoId = null, naoRegistrado = false;
+    let pedidoId = null, naoRegistrado = false, infoCartao = null;
 
     // Abre a aba já no clique (senão o navegador bloqueia), e só depois coloca o link
     const janela = db ? window.open("", "_blank") : null;
@@ -352,7 +352,7 @@
           p_pagamento: pag, p_troco: troco || null, p_usar_brinde: usarBrinde
         });
         if (error) {
-          if (error.code === "P0001") {           // recusado pelo banco (ex.: sem brinde)
+          if (error.code === "P0001") {           // recusado pelo banco (ex.: limite diário, sem brinde)
             if (janela) janela.close();
             $("e-enviar").textContent = error.message + ".";
             enviando = false; $("enviar-txt").textContent = "Enviar pedido";
@@ -362,6 +362,11 @@
           naoRegistrado = true;
         } else {
           pedidoId = data.id; total = Number(data.total); desc = Number(data.desconto);
+          // Busca como ficou o cartão, para avisar a loja na mensagem
+          try {
+            const r = await db.rpc("consultar_cartao", { p_bloco: bloco, p_apto: apto });
+            if (!r.error && r.data && r.data[0]) infoCartao = r.data[0];
+          } catch (e) {}
         }
       } catch (e) { naoRegistrado = true; }
       enviando = false; $("enviar-txt").textContent = "Enviar pedido";
@@ -371,12 +376,20 @@
     let pg = pag === "Crédito" ? "Crédito (enviar link de pagamento)" : pag;
     if (pag === "Dinheiro" && troco) pg += ` (troco para R$ ${troco})`;
 
+    let linhaCartao = [];
+    if (infoCartao) {
+      linhaCartao = [infoCartao.brindes_disponiveis > 0
+        ? "Cartão fidelidade: completo, pote grátis liberado"
+        : `Cartão fidelidade: ${infoCartao.carimbos} de 5`];
+    }
+
     const msg = [
       `*Pedido LV Cakes${pedidoId ? " nº " + pedidoId : ""}*`, "",
       ...itensTxt,
       ...(desc ? [`Pote grátis do cartão fidelidade: -${brl(desc)}`] : []),
       "", `*Total: ${brl(total)}*`, "",
       `Nome: ${nome}`, `Bloco ${bloco}, apto ${apto}`, `Pagamento: ${pg}`,
+      ...linhaCartao,
       ...(naoRegistrado ? ["", "(pedido não registrado no sistema)"] : [])
     ].join("\n");
 
@@ -385,7 +398,11 @@
       $("copiar-txt").textContent = "Copiar chave Pix";
       $("pix").style.display = "block";
     }
-    if (db && pedidoId) { $("ok-envio").style.display = "block"; setBrinde(false); carregarCartao(); }
+    if (db && pedidoId) {
+      $("ok-envio").style.display = "block";
+      setBrinde(false);
+      if (infoCartao) { cartao = infoCartao; renderCartao(); } else carregarCartao();
+    }
 
     abrir(`https://wa.me/${FONE}?text=${encodeURIComponent(msg)}`, janela);
   };
