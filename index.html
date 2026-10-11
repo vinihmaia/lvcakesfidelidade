@@ -9,13 +9,13 @@
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=Cormorant+Garamond:ital,wght@1,500&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" rel="stylesheet">
 <style>
   html,body{margin:0;background:#FFFBF4}
   #lv{--ink:#2A140C;--soft:#7E6456;--line:rgba(42,20,12,.13);--gold:#A9813F;--gold2:#C9A35F;--tint:#F2E4C9;--paper:#FFFBF4;
       font-family:'Inter Tight',system-ui,sans-serif;font-weight:500;letter-spacing:-0.035em;color:var(--ink);
-      background:var(--paper);padding:28px 22px 48px;max-width:560px;margin:0 auto;box-sizing:border-box}
+      background:var(--paper);padding:28px 22px 32px;max-width:560px;margin:0 auto;box-sizing:border-box}
   #lv *{box-sizing:border-box;font-family:inherit}
   #lv button{all:unset;cursor:pointer;box-sizing:border-box}
   #lv button:focus-visible,#lv input:focus-visible,#lv a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
@@ -119,6 +119,15 @@
       <i class="ti ti-copy" aria-hidden="true"></i><span id="copiar-txt">Copiar chave Pix</span></button>
     <div style="font-size:13px;color:var(--soft);margin-top:10px">Mande o comprovante na conversa do WhatsApp.</div>
   </div>
+
+  <!-- RODAPÉ -->
+  <footer style="margin-top:48px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:center;align-items:center;gap:8px;font-size:13px;color:var(--soft);letter-spacing:-0.01em">
+    <span>Desenvolvido por</span>
+    <a href="https://www.vitrapi.com/" target="_blank" rel="noopener" aria-label="Vitrapi, site do desenvolvedor"
+       style="font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;font-weight:700;font-size:15px;letter-spacing:-0.5px;color:#1F1F1F;text-decoration:none">
+      <span style="color:#8A8A8A">&lt;</span>vitr<span style="color:#F5B700">api</span><span style="color:#8A8A8A">/&gt;</span>
+    </a>
+  </footer>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
