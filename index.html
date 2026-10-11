@@ -25,9 +25,12 @@
   #lv .ph{width:72px;height:72px;border-radius:14px;object-fit:cover;object-position:center 48%;display:block}
   #lv .stp{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:17px}
   #lv .fld{display:flex;flex-direction:column;gap:4px}
-  #lv .fld label{font-size:13px;color:var(--soft)}
+  #lv .fld label,#lv .fld .lbl{font-size:13px;color:var(--soft)}
   #lv .fld input{all:unset;box-sizing:border-box;width:100%;font-size:22px;padding:6px 0;border-bottom:1.5px solid var(--ink);color:var(--ink)}
   #lv .fld input::placeholder{color:rgba(42,20,12,.3)}
+  #lv .blc{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:6px}
+  #lv .blc button{height:46px;border:1.5px solid var(--ink);border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:19px}
+  #lv .blc button.on{background:var(--ink);color:var(--paper)}
   #lv .pay{flex:1;text-align:center;padding:12px 6px;border:1.5px solid var(--ink);border-radius:999px;font-size:16px}
   #lv .pay.on{background:var(--ink);color:var(--paper)}
   #lv .err{font-size:13px;color:#B3261E}
@@ -71,10 +74,15 @@
   <div id="menu" style="margin-top:32px"></div>
   <div class="err" id="e-itens"></div>
 
-  <div style="margin-top:34px;display:grid;grid-template-columns:1fr 1fr;gap:20px 16px">
-    <div class="fld" style="grid-column:1/-1"><label for="nome">Seu nome</label><input id="nome" autocomplete="name" placeholder="Maria"><span class="err" id="e-nome"></span></div>
-    <div class="fld"><label for="bloco">Bloco</label><input id="bloco" placeholder="B"><span class="err" id="e-bloco"></span></div>
-    <div class="fld"><label for="apto">Apartamento</label><input id="apto" inputmode="numeric" placeholder="42"><span class="err" id="e-apto"></span></div>
+  <div style="margin-top:34px;display:flex;flex-direction:column;gap:22px">
+    <div class="fld"><label for="nome">Seu nome</label><input id="nome" autocomplete="name" placeholder="Maria"><span class="err" id="e-nome"></span></div>
+    <div class="fld">
+      <span class="lbl" id="bloco-lbl">Bloco</span>
+      <div class="blc" id="blocos" role="radiogroup" aria-labelledby="bloco-lbl"></div>
+      <input type="hidden" id="bloco">
+      <span class="err" id="e-bloco"></span>
+    </div>
+    <div class="fld"><label for="apto">Apartamento</label><input id="apto" inputmode="numeric" maxlength="4" placeholder="42"><span class="err" id="e-apto"></span></div>
   </div>
 
   <div style="margin-top:32px">
@@ -125,6 +133,7 @@
     ["morango",   "Ninho com morango",     15, "morango.jpeg"],
     ["nutella",   "Ninho com Nutella",     17, "nutella.jpeg"]
   ];
+  const BLOCOS = ["1", "2", "3", "4", "5", "6", "7"];
   const LOGO  = "logo.png";
   const FONE  = "5511955862368";
   const CHAVE = "viniciusmaia_2022@hotmail.com";
@@ -176,7 +185,7 @@
     [...selos.children].forEach((s, i) => s.classList.toggle("on", i < 5 ? i < c : b > 0));
     let txt;
     if (!cartao) {
-      txt = db ? "Digite bloco e apartamento no pedido para ver seus carimbos."
+      txt = db ? "Escolha o bloco e digite o apartamento no pedido para ver seus carimbos."
                : "Cada pedido entregue vale um carimbo.";
     } else if (b > 0) {
       txt = `Você tem ${b} pote${b > 1 ? "s" : ""} grátis. Use no pedido abaixo.`;
@@ -250,6 +259,28 @@
     return { n, sub, desc, total: sub - desc };
   }
 
+  /* ---------- Botões de bloco (1 a 7) ---------- */
+  const blocos = $("blocos");
+  BLOCOS.forEach(b => {
+    const btn = document.createElement("button");
+    btn.textContent = b;
+    btn.setAttribute("role", "radio");
+    btn.setAttribute("aria-checked", "false");
+    btn.setAttribute("aria-label", "Bloco " + b);
+    btn.onclick = () => escolherBloco(b, true);
+    blocos.appendChild(btn);
+  });
+  function escolherBloco(b, avisar){
+    $("bloco").value = b;
+    [...blocos.children].forEach(x => {
+      const on = x.textContent === b;
+      x.classList.toggle("on", on);
+      x.setAttribute("aria-checked", on);
+    });
+    $("e-bloco").textContent = "";
+    if (avisar) $("bloco").dispatchEvent(new Event("input"));
+  }
+
   /* ---------- Pagamento ---------- */
   const notas = {
     "Pix": "A chave Pix aparece quando você enviar o pedido.",
@@ -267,9 +298,18 @@
 
   /* ---------- Dados do cliente (lembrados no celular) ---------- */
   let timer;
+  const soNumeros = v => v.replace(/\D/g, "").slice(0, 4);
   ["nome", "bloco", "apto"].forEach(k => {
-    try { const v = localStorage.getItem("lv_" + k); if (v) $(k).value = v; } catch(e){}
+    try {
+      const v = localStorage.getItem("lv_" + k);
+      if (v) {
+        if (k === "bloco") { const d = String(Number(v.replace(/\D/g, ""))); if (BLOCOS.includes(d)) escolherBloco(d, false); }
+        else if (k === "apto") $(k).value = soNumeros(v);
+        else $(k).value = v;
+      }
+    } catch(e){}
     $(k).addEventListener("input", () => {
+      if (k === "apto") { const c = soNumeros($(k).value); if (c !== $(k).value) $(k).value = c; }
       $("e-" + k).textContent = "";
       if (k !== "nome") { clearTimeout(timer); timer = setTimeout(carregarCartao, 500); }
     });
@@ -289,8 +329,8 @@
     $("e-enviar").textContent = "";
     if (!q.some(x => x)) { $("e-itens").textContent = "Escolha pelo menos um pote."; ok = false; }
     if (!nome)  { $("e-nome").textContent  = "Digite seu nome."; ok = false; }
-    if (!bloco) { $("e-bloco").textContent = "Digite o bloco."; ok = false; }
-    if (!apto)  { $("e-apto").textContent  = "Digite o apartamento."; ok = false; }
+    if (!bloco) { $("e-bloco").textContent = "Escolha o seu bloco."; ok = false; }
+    if (!apto)  { $("e-apto").textContent  = "Digite o número do apartamento."; ok = false; }
     if (!pag)   { $("e-pay").textContent   = "Escolha a forma de pagamento."; ok = false; }
     if (!ok) return;
 
