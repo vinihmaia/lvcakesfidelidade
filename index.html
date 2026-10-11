@@ -6,7 +6,7 @@
 <title>LV CAKES | Bolo de pote</title>
 <meta name="description" content="Peça seu bolo de pote LV Cakes e receba no seu bloco. Novidade: cartão fidelidade.">
 <meta name="theme-color" content="#FFFBF4">
-<link rel="icon" href="fotos/logo.png">
+<link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
@@ -125,6 +125,7 @@
     ["morango",   "Ninho com morango",     15, "morango.jpeg"],
     ["nutella",   "Ninho com Nutella",     17, "nutella.jpeg"]
   ];
+  const LOGO  = "logo.png";
   const FONE  = "5511955862368";
   const CHAVE = "viniciusmaia_2022@hotmail.com";
 
@@ -149,13 +150,14 @@
     i.onerror = () => i.replaceWith(fallback());
     return i;
   }
-  const logo = img("fotos/logo.png", "Logo LV Cakes", "", () => {
+  const logo = img(LOGO, "Logo LV Cakes", "", () => {
     const d = document.createElement("div");
     d.setAttribute("aria-label", "Logo LV Cakes");
     d.style.cssText = "width:64px;height:64px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font:italic 500 30px 'Cormorant Garamond',serif";
     d.textContent = "LV";
     return d;
   });
+  logo.loading = "eager";
   logo.style.cssText = "width:64px;height:64px;border-radius:50%;object-fit:cover;display:block";
   $("logo").appendChild(logo);
 
@@ -216,7 +218,7 @@
   const menu = $("menu");
   SABORES.forEach(([id, n, p, f], i) => {
     const r = document.createElement("div"); r.className = "row";
-    r.appendChild(img("fotos/" + f, "Bolo de pote " + n, "ph", () => {
+    r.appendChild(img(f, "Bolo de pote " + n, "ph", () => {
       const d = document.createElement("div"); d.className = "ph"; d.style.background = "var(--tint)"; return d;
     }));
     const t = document.createElement("div");
@@ -369,4 +371,4 @@
 })();
 </script>
 </body>
-</html> 
+</html>
