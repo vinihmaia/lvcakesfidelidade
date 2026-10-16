@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>LV CAKES | Bolo de pote</title>
 <meta name="description" content="Peça seu bolo de pote LV Cakes e receba no seu bloco. Novidade: cartão fidelidade.">
+
+<!-- PRÉVIA DO LINK NO WHATSAPP -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="LV Cakes">
+<meta property="og:title" content="LV Cakes | Bolo de pote entregue no seu bloco">
+<meta property="og:description" content="Chocolate, Prestígio, Cenoura, Ninho com morango e Ninho com Nutella. A partir de R$ 15. Cartão fidelidade: compre 5, ganhe 1.">
+<meta property="og:image" content="https://SEU-SITE/morango.jpeg">  <!-- ⚠️ CONFIRA: endereço real do site -->
+<meta property="og:url" content="https://SEU-SITE/">                <!-- ⚠️ CONFIRA: endereço real do site -->
+
 <meta name="theme-color" content="#FFF4EA">
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,6 +54,11 @@
   #lv .foto{position:relative}
   #lv .ph{width:100%;aspect-ratio:1;border-radius:16px;object-fit:cover;object-position:center 48%;display:block}
   #lv .selo-sab{position:absolute;top:8px;left:8px;background:var(--choc);color:var(--cream-t);font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px}
+  #lv .esg{position:absolute;left:8px;right:8px;bottom:8px;background:rgba(62,36,24,.9);color:#fff;font-size:14px;font-weight:800;text-align:center;padding:7px;border-radius:10px;display:none}
+  #lv .card.esgotado .esg{display:block}
+  #lv .card.esgotado .ph{filter:grayscale(1);opacity:.6}
+  #lv .card.esgotado .stp{opacity:.35;cursor:default}
+  #lv .card.esgotado .nome-sabor,#lv .card.esgotado .preco{opacity:.6}
   #lv .nome-sabor{font-size:17px;font-weight:800;margin:10px 4px 0;line-height:1.15}
   #lv .linha{display:flex;align-items:center;justify-content:space-between;margin:6px 4px 2px}
   #lv .preco{font-size:15px;color:var(--soft)}
@@ -163,7 +178,7 @@
   <!-- BARRA FIXA COM TOTAL -->
   <div class="barra">
     <div class="err" id="e-enviar"></div>
-    <div class="ok" id="ok-envio" style="display:none;font-size:14px;color:var(--soft)">Pedido registrado. Seu carimbo já está no cartão.</div>
+    <div class="ok" id="ok-envio" style="display:none;font-size:14px;color:var(--soft)">Pedido registrado. O carimbo entra no cartão quando o pedido for entregue.</div>
     <div style="display:flex;align-items:center;gap:12px">
       <div style="flex:1;min-width:0">
         <div id="qtd" style="font-size:13px;color:var(--soft)">Nenhum pote ainda</div>
@@ -175,12 +190,17 @@
   </div>
 
   <!-- RODAPÉ -->
-  <footer style="padding:20px 0 28px;display:flex;justify-content:center;align-items:center;gap:8px;font-size:13px;color:var(--soft)">
-    <span>Desenvolvido por</span>
-    <a href="https://www.vitrapi.com/" target="_blank" rel="noopener" aria-label="Vitrapi, site do desenvolvedor"
-       style="font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;font-weight:700;font-size:15px;letter-spacing:-0.5px;color:#1F1F1F;text-decoration:none">
-      <span style="color:#8A8A8A">&lt;</span>vitr<span style="color:#F5B700">api</span><span style="color:#8A8A8A">/&gt;</span>
-    </a>
+  <footer style="padding:20px 0 28px;display:flex;flex-direction:column;align-items:center;gap:12px;font-size:13px;color:var(--soft)">
+    <a href="painel.html" rel="nofollow" aria-label="Área da loja, acesso restrito"
+       style="display:inline-flex;align-items:center;gap:6px;color:var(--soft);text-decoration:none;font-size:13px;padding:6px 14px;border:1px solid var(--line);border-radius:999px">
+      <i class="ti ti-lock" aria-hidden="true"></i>Área da loja</a>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span>Desenvolvido por</span>
+      <a href="https://www.vitrapi.com/" target="_blank" rel="noopener" aria-label="Vitrapi, site do desenvolvedor"
+         style="font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;font-weight:700;font-size:15px;letter-spacing:-0.5px;color:#1F1F1F;text-decoration:none">
+        <span style="color:#8A8A8A">&lt;</span>vitr<span style="color:#F5B700">api</span><span style="color:#8A8A8A">/&gt;</span>
+      </a>
+    </div>
   </footer>
 </main>
 
@@ -191,6 +211,7 @@
   // [id no banco, nome, preço, foto, categoria, selo]
   // -> o id precisa ser igual ao da tabela "sabores"
   // -> selo: texto curto em cima da foto ("Mais pedido", "Novidade") ou "" para nenhum
+  // ⚠️ CONFIRA: em qual sabor fica o selo "Mais pedido"
   const SABORES = [
     ["chocolate", "Chocolate",             15, "chocolate.jpeg", "Chocolate", "Mais pedido"],
     ["prestigio", "Prestígio",             15, "prestigio.jpeg", "Chocolate", ""],
@@ -204,8 +225,8 @@
   const CHAVE = "viniciusmaia_2022@hotmail.com";
 
   // Pix copia e cola: nome do titular e cidade, sem acento
-  const PIX_NOME   = "LV CAKES";    // até 25 letras
-  const PIX_CIDADE = "SAO PAULO";   // até 15 letras
+  const PIX_NOME   = "LV CAKES";    // ⚠️ CONFIRA: até 25 letras
+  const PIX_CIDADE = "SAO PAULO";   // ⚠️ CONFIRA: até 15 letras
 
   // Horário de entregas. Dias: 0=domingo, 1=segunda ... 6=sábado.
   // Fora do horário o site só AVISA; o pedido continua liberado.
@@ -224,6 +245,7 @@
     ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
   const q = SABORES.map(() => 0);
+  const esgotado = SABORES.map(() => false);
   let pag = "", usarBrinde = false, enviando = false, cartao = null, consulta = 0, pixAtual = "";
   const $ = id => document.getElementById(id);
   const brl = v => v.toLocaleString("pt-BR", {style:"currency", currency:"BRL", minimumFractionDigits: v % 1 ? 2 : 0});
@@ -378,6 +400,7 @@
       const d = document.createElement("div"); d.className = "ph"; d.style.background = "var(--peach)"; return d;
     }));
     if (selo) { const s = document.createElement("span"); s.className = "selo-sab"; s.textContent = selo; foto.appendChild(s); }
+    const esg = document.createElement("span"); esg.className = "esg"; esg.textContent = "Esgotado"; foto.appendChild(esg);
     r.appendChild(foto);
     const t = document.createElement("div"); t.className = "nome-sabor"; t.textContent = n;
     r.appendChild(t);
@@ -420,7 +443,7 @@
   function mostrarRepetir(){
     let ult = null;
     try { ult = JSON.parse(localStorage.getItem("lv_ultimo") || "null"); } catch(e) {}
-    const itens = ult ? SABORES.map(([id], i) => ult[id] > 0 ? [i, Math.min(20, ult[id] | 0)] : null).filter(Boolean) : [];
+    const itens = ult ? SABORES.map(([id], i) => (ult[id] > 0 && !esgotado[i]) ? [i, Math.min(20, ult[id] | 0)] : null).filter(Boolean) : [];
     if (!itens.length) { $("repetir").style.display = "none"; return; }
     $("repetir-txt").textContent = "Repetir último pedido: " + itens.map(([i, x]) => `${x}x ${SABORES[i][1]}`).join(", ");
     $("repetir").style.display = "flex";
@@ -430,6 +453,35 @@
       itens.forEach(([i, x]) => setQtd[i](x));
       $("repetir-txt").textContent = "Pronto, pedido repetido. Confira e envie.";
     };
+  }
+
+  /* ---------- Esgotado (lido do banco) ---------- */
+  let ultimaChave = esgotado.join();
+  function aplicarEstoque(){
+    const removidos = [];
+    SABORES.forEach((s, i) => {
+      const off = esgotado[i];
+      cards[i].classList.toggle("esgotado", off);
+      cards[i].style.order = off ? 1 : 0;           // esgotados vão para o fim
+      cards[i].querySelectorAll(".stp").forEach(b => { b.disabled = off; });
+      if (off && q[i] > 0) { setQtd[i](0); removidos.push(s[1]); }
+    });
+    if (removidos.length) $("e-itens").textContent = `${removidos.join(", ")} acabou de esgotar e saiu do seu pedido.`;
+    mostrarRepetir();
+  }
+  async function carregarEstoque(){
+    if (!db) return;
+    try {
+      const { data, error } = await db.from("sabores").select("id,ativo");
+      if (error || !data) return;
+      const mapa = {};
+      data.forEach(s => { mapa[s.id] = s.ativo; });
+      SABORES.forEach(([id], i) => { esgotado[i] = mapa[id] === false; });
+      const chave = esgotado.join();
+      if (chave === ultimaChave) return;           // nada mudou
+      ultimaChave = chave;
+      aplicarEstoque();
+    } catch (e) { /* sem internet: segue como está */ }
   }
 
   function calc(){
@@ -545,11 +597,12 @@
           p_pagamento: pag, p_troco: troco || null, p_usar_brinde: usarBrinde
         });
         if (error) {
-          if (error.code === "P0001") {           // recusado pelo banco (ex.: limite diário, sem brinde)
+          if (error.code === "P0001") {           // recusado pelo banco (ex.: limite diário, sem brinde, esgotado)
             if (janela) janela.close();
             $("e-enviar").textContent = error.message + ".";
             enviando = false; $("enviar-txt").textContent = "Enviar pedido";
             carregarCartao();
+            carregarEstoque();
             return;
           }
           naoRegistrado = true;
@@ -631,6 +684,9 @@
   renderCartao();
   calc();
   carregarCartao();
+  carregarEstoque();
+  setInterval(carregarEstoque, 60000);                       // confere o estoque a cada minuto
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) carregarEstoque(); });
 })();
 </script>
 </body>
