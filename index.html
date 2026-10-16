@@ -2,79 +2,123 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>LV CAKES | Bolo de pote</title>
 <meta name="description" content="Peça seu bolo de pote LV Cakes e receba no seu bloco. Novidade: cartão fidelidade.">
-<meta name="theme-color" content="#FFFBF4">
+<meta name="theme-color" content="#FFF4EA">
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=Cormorant+Garamond:ital,wght@1,500&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Cormorant+Garamond:ital,wght@1,500&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" rel="stylesheet">
 <style>
-  html,body{margin:0;background:#FFFBF4}
-  #lv{--ink:#2A140C;--soft:#7E6456;--line:rgba(42,20,12,.13);--gold:#A9813F;--gold2:#C9A35F;--tint:#F2E4C9;--paper:#FFFBF4;
-      font-family:'Inter Tight',system-ui,sans-serif;font-weight:500;letter-spacing:-0.035em;color:var(--ink);
-      background:var(--paper);padding:28px 22px 32px;max-width:560px;margin:0 auto;box-sizing:border-box}
+  html,body{margin:0;background:#FFF4EA}
+  #lv{--ink:#3E2418;--soft:#8C6553;--line:rgba(62,36,24,.12);--choc:#5A3422;--peach:#F6D3B5;--peach2:#F2A97A;
+      --acc:#C25A33;--cream:#FFF4EA;--cream-t:#FCE7D4;
+      font-family:'Nunito',system-ui,sans-serif;font-weight:600;letter-spacing:-0.01em;color:var(--ink);
+      background:var(--cream);padding:24px 22px 0;max-width:560px;margin:0 auto;box-sizing:border-box;overflow-x:clip}
   #lv *{box-sizing:border-box;font-family:inherit}
   #lv button{all:unset;cursor:pointer;box-sizing:border-box}
-  #lv button:focus-visible,#lv input:focus-visible,#lv a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-  #lv .row{display:grid;grid-template-columns:72px minmax(0,1fr) auto;align-items:center;gap:14px;padding:12px 10px;border-top:1px solid var(--line);transition:background .2s}
-  #lv .row.on{background:var(--tint);border-radius:16px;border-top-color:transparent}
-  #lv .row.on+.row{border-top-color:transparent}
-  #lv .ph{width:72px;height:72px;border-radius:14px;object-fit:cover;object-position:center 48%;display:block}
-  #lv .stp{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:17px}
-  #lv .fld{display:flex;flex-direction:column;gap:4px}
-  #lv .fld label,#lv .fld .lbl{font-size:13px;color:var(--soft)}
-  #lv .fld input{all:unset;box-sizing:border-box;width:100%;font-size:22px;padding:6px 0;border-bottom:1.5px solid var(--ink);color:var(--ink)}
-  #lv .fld input::placeholder{color:rgba(42,20,12,.3)}
-  #lv .blc{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:6px}
-  #lv .blc button{height:46px;border:1.5px solid var(--ink);border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:19px}
-  #lv .blc button.on{background:var(--ink);color:var(--paper)}
-  #lv .pay{flex:1;text-align:center;padding:12px 6px;border:1.5px solid var(--ink);border-radius:999px;font-size:16px}
-  #lv .pay.on{background:var(--ink);color:var(--paper)}
+  #lv button:focus-visible,#lv input:focus-visible,#lv a:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+  #lv .sec{font-size:13px;color:var(--soft);margin-bottom:10px;font-weight:700}
+
+  /* aviso de horário */
+  #lv .aviso{margin-top:18px;background:var(--peach);color:var(--choc);border-radius:16px;padding:12px 14px;font-size:14px;line-height:1.4;gap:10px;align-items:flex-start}
+  #lv .aviso i{font-size:20px;flex:none}
+
+  /* cartão fidelidade em anel */
+  #lv .anel{width:64px;height:64px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+      background:conic-gradient(var(--peach2) var(--p,0%), rgba(252,231,212,.18) 0)}
+  #lv .anel-in{width:48px;height:48px;border-radius:50%;background:var(--choc);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--cream-t)}
+
+  /* filtros */
+  #lv .chips{display:flex;gap:8px;margin-top:26px}
+  #lv .chip{padding:7px 15px;border-radius:999px;background:var(--peach);font-size:14px;font-weight:700}
+  #lv .chip.on{background:var(--choc);color:#fff}
+
+  /* cardápio deslizante */
+  #lv .trilho{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:14px 22px 6px;margin:0 -22px;scrollbar-width:none}
+  #lv .trilho::-webkit-scrollbar{display:none}
+  #lv .card{flex:none;width:62%;max-width:250px;scroll-snap-align:start;scroll-margin-left:22px;background:#fff;border-radius:22px;padding:8px;border:2px solid transparent;transition:border-color .2s}
+  #lv .card.on{border-color:var(--acc)}
+  #lv .foto{position:relative}
+  #lv .ph{width:100%;aspect-ratio:1;border-radius:16px;object-fit:cover;object-position:center 48%;display:block}
+  #lv .selo-sab{position:absolute;top:8px;left:8px;background:var(--choc);color:var(--cream-t);font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px}
+  #lv .nome-sabor{font-size:17px;font-weight:800;margin:10px 4px 0;line-height:1.15}
+  #lv .linha{display:flex;align-items:center;justify-content:space-between;margin:6px 4px 2px}
+  #lv .preco{font-size:15px;color:var(--soft)}
+  #lv .stp{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;border:1.5px solid var(--peach2);color:var(--acc)}
+  #lv .stp.mais{background:var(--acc);border-color:var(--acc);color:#fff}
+  #lv .dica{font-size:13px;color:var(--soft);display:flex;align-items:center;gap:6px;margin-top:6px}
+  #lv #repetir{margin-top:14px;width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border:1.5px dashed var(--peach2);border-radius:16px;font-size:14px;color:var(--choc)}
+  #lv #repetir i{font-size:20px;color:var(--acc);flex:none}
+
+  /* formulário */
+  #lv .fld{display:flex;flex-direction:column;gap:6px}
+  #lv .fld label,#lv .fld .lbl{font-size:13px;color:var(--soft);font-weight:700}
+  #lv .fld input{all:unset;box-sizing:border-box;width:100%;font-size:18px;padding:13px 16px;background:#fff;border-radius:16px;border:1.5px solid var(--line);color:var(--ink)}
+  #lv .fld input:focus{border-color:var(--peach2)}
+  #lv .fld input::placeholder{color:rgba(62,36,24,.3)}
+  #lv .blc{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  #lv .blc button{height:46px;background:#fff;border:1.5px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+  #lv .blc button.on{background:var(--choc);border-color:var(--choc);color:#fff}
+  #lv .pay{flex:1;text-align:center;padding:13px 6px;background:#fff;border:1.5px solid var(--line);border-radius:14px;font-size:16px;font-weight:700}
+  #lv .pay.on{background:var(--choc);border-color:var(--choc);color:#fff}
   #lv .err{font-size:13px;color:#B3261E}
-  #lv .selo{aspect-ratio:1;border-radius:50%;border:1.5px dashed rgba(201,163,95,.55);display:flex;align-items:center;justify-content:center;font-size:20px;color:transparent;transition:background .3s,color .3s}
-  #lv .selo.on{background:var(--gold2);border:1.5px solid var(--gold2);color:var(--ink)}
-  #lv .selo.premio{border-style:solid}
-  #lv .selo.premio.on{background:var(--paper);border-color:var(--paper);color:var(--gold)}
-  #lv #usar-brinde{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;border:1.5px solid var(--gold);border-radius:999px;color:var(--gold);font-size:17px}
-  #lv #usar-brinde.on{background:var(--gold);color:#fff}
+
+  #lv #usar-brinde{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:15px;background:var(--peach);border-radius:18px;color:var(--choc);font-size:17px;font-weight:800}
+  #lv #usar-brinde.on{background:var(--choc);color:var(--cream-t)}
+
+  /* pix */
+  #lv .btn-pix{margin-top:12px;width:100%;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:700}
+
+  /* barra fixa */
+  #lv .barra{position:sticky;bottom:0;z-index:5;margin:28px -22px 0;padding:12px 22px calc(12px + env(safe-area-inset-bottom));background:var(--cream);border-top:1px solid var(--line)}
+  #lv .barra .err:not(:empty),#lv .barra .ok{margin-bottom:8px;text-align:center}
+
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-  @media (prefers-reduced-motion:reduce){#lv .row,#lv .selo{transition:none}}
+  @media (prefers-reduced-motion:reduce){#lv .card{transition:none}}
 </style>
 </head>
 <body>
 <main id="lv">
   <h1 class="sr">LV CAKES, pedidos de bolo de pote</h1>
 
-  <div style="display:flex;align-items:center;gap:14px">
+  <!-- TOPO COM SAUDAÇÃO -->
+  <div style="display:flex;align-items:center;gap:12px">
     <div id="logo" style="flex:none"></div>
     <div style="flex:1;min-width:0">
-      <div style="font-size:46px;line-height:.9;letter-spacing:-0.05em">LV CAKES</div>
-      <div style="font-size:14px;color:var(--soft);margin-top:8px;letter-spacing:-0.01em">Bolo de pote entregue no seu bloco</div>
+      <div id="oi" style="font-size:26px;font-weight:800;line-height:1.05;letter-spacing:-0.02em">LV Cakes</div>
+      <div id="oi-sub" style="font-size:14px;color:var(--soft);margin-top:3px">Bolo de pote entregue no seu bloco</div>
     </div>
     <a href="https://www.instagram.com/lvcakes_oficial" target="_blank" rel="noopener" aria-label="Instagram da LV Cakes"
-       style="color:var(--ink);font-size:28px;line-height:1;text-decoration:none;align-self:flex-start">
+       style="color:var(--ink);font-size:28px;line-height:1;text-decoration:none">
       <i class="ti ti-brand-instagram" aria-hidden="true"></i></a>
   </div>
 
+  <!-- AVISO DE HORÁRIO -->
+  <div class="aviso" id="aviso-horario" role="status" style="display:none">
+    <i class="ti ti-clock" aria-hidden="true"></i><span id="aviso-horario-txt"></span>
+  </div>
+
   <!-- CARTÃO FIDELIDADE -->
-  <section aria-labelledby="cartao-titulo" style="margin-top:28px;background:var(--ink);color:var(--paper);border-radius:24px;padding:22px 20px 20px">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <span style="font-size:12px;letter-spacing:0;background:var(--gold2);color:var(--ink);border-radius:999px;padding:4px 11px">Novidade</span>
-      <i class="ti ti-crown" aria-hidden="true" style="color:var(--gold2);font-size:22px"></i>
+  <section aria-labelledby="cartao-titulo" style="margin-top:22px;background:var(--choc);color:var(--cream-t);border-radius:22px;padding:16px;display:flex;align-items:center;gap:14px">
+    <div class="anel" id="anel" role="img"><div class="anel-in" id="anel-txt"></div></div>
+    <div style="min-width:0">
+      <h2 id="cartao-titulo" style="font-size:13px;margin:0;font-weight:700;color:var(--peach2)">Cartão fidelidade · compre 5, ganhe 1</h2>
+      <p id="cartao-status" style="font-size:15px;margin:4px 0 0;line-height:1.35"></p>
     </div>
-    <h2 id="cartao-titulo" style="font-size:34px;line-height:1;margin:14px 0 0;font-weight:500;letter-spacing:-0.05em">Cartão fidelidade</h2>
-    <p style="font-size:16px;margin:8px 0 0;color:#E4D3C3;letter-spacing:-0.02em">Compre 5 vezes e ganhe 1 pote grátis.</p>
-    <div id="selos" role="img" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:20px"></div>
-    <p id="cartao-status" style="font-size:14px;margin:14px 0 0;color:#E4D3C3;letter-spacing:-0.01em"></p>
   </section>
 
-  <div id="menu" style="margin-top:32px"></div>
+  <!-- CARDÁPIO -->
+  <div class="chips" id="chips" role="group" aria-label="Filtrar sabores"></div>
+  <div class="trilho" id="menu" aria-label="Sabores"></div>
+  <div class="dica" id="dica"><i class="ti ti-hand-finger-right" aria-hidden="true"></i>Deslize para ver mais sabores</div>
+  <button id="repetir" style="display:none"><i class="ti ti-rotate-clockwise" aria-hidden="true"></i><span id="repetir-txt"></span></button>
   <div class="err" id="e-itens"></div>
 
-  <div style="margin-top:34px;display:flex;flex-direction:column;gap:22px">
+  <!-- DADOS -->
+  <div style="margin-top:30px;display:flex;flex-direction:column;gap:20px">
     <div class="fld"><label for="nome">Seu nome</label><input id="nome" autocomplete="name" placeholder="Maria"><span class="err" id="e-nome"></span></div>
     <div class="fld">
       <span class="lbl" id="bloco-lbl">Bloco</span>
@@ -85,43 +129,53 @@
     <div class="fld"><label for="apto">Apartamento</label><input id="apto" inputmode="numeric" maxlength="4" placeholder="42"><span class="err" id="e-apto"></span></div>
   </div>
 
-  <div style="margin-top:32px">
-    <div style="font-size:13px;color:var(--soft);margin-bottom:10px">Pagamento</div>
+  <!-- PAGAMENTO -->
+  <div style="margin-top:28px">
+    <div class="sec">Pagamento</div>
     <div style="display:flex;gap:8px" role="radiogroup" aria-label="Forma de pagamento">
       <button class="pay" data-p="Pix" role="radio" aria-checked="false">Pix</button>
       <button class="pay" data-p="Crédito" role="radio" aria-checked="false">Crédito</button>
       <button class="pay" data-p="Dinheiro" role="radio" aria-checked="false">Dinheiro</button>
     </div>
-    <div id="nota" style="font-size:14px;color:var(--soft);margin-top:10px"></div>
+    <div id="nota" style="font-size:14px;color:var(--soft);margin-top:10px;line-height:1.4"></div>
     <div class="fld" id="troco-box" style="margin-top:12px;display:none"><label for="troco">Troco para quanto? (opcional)</label><input id="troco" inputmode="decimal" placeholder="50"></div>
     <div class="err" id="e-pay"></div>
   </div>
 
-  <div id="brinde-box" style="display:none;margin-top:28px">
+  <div id="brinde-box" style="display:none;margin-top:24px">
     <button id="usar-brinde" aria-pressed="false"><i class="ti ti-gift" aria-hidden="true"></i><span id="usar-brinde-txt">Usar meu pote grátis</span></button>
   </div>
 
-  <div style="margin-top:38px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px">
-    <div style="font-size:15px;color:var(--soft)" id="qtd">Nenhum pote ainda</div>
-    <div style="font-size:68px;line-height:.85;letter-spacing:-0.06em" id="total">R$ 0</div>
+  <!-- PIX (aparece depois de enviar) -->
+  <div id="pix" style="display:none;margin-top:24px;background:#fff;border:1.5px solid var(--peach2);border-radius:22px;padding:18px">
+    <div style="font-size:14px;color:var(--soft)">Pague com Pix</div>
+    <div id="pix-total" style="font-size:32px;font-weight:800;margin-top:2px"></div>
+    <div id="pix-dica" style="font-size:14px;margin-top:8px;line-height:1.4"></div>
+    <button id="copiar-codigo" class="btn-pix" style="background:var(--choc);color:#fff">
+      <i class="ti ti-copy" aria-hidden="true"></i><span id="copiar-codigo-txt">Copiar código Pix</span></button>
+    <div style="font-size:13px;color:var(--soft);margin-top:16px">Ou pague pela chave:</div>
+    <div id="chave" style="font-size:16px;margin-top:4px;word-break:break-all;user-select:all"></div>
+    <button id="copiar" class="btn-pix" style="background:var(--peach);color:var(--choc);height:46px;font-size:15px">
+      <i class="ti ti-key" aria-hidden="true"></i><span id="copiar-txt">Copiar chave Pix</span></button>
+    <div style="font-size:13px;color:var(--soft);margin-top:12px">Mande o comprovante na conversa do WhatsApp.</div>
   </div>
 
-  <button id="enviar" style="margin-top:20px;width:100%;height:80px;border-radius:999px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;gap:12px;font-size:28px;letter-spacing:-0.04em">
-    <i class="ti ti-brand-whatsapp" aria-hidden="true"></i><span id="enviar-txt">Enviar pedido</span></button>
-  <div class="err" id="e-enviar" style="margin-top:8px;text-align:center"></div>
-  <div id="ok-envio" style="display:none;margin-top:8px;text-align:center;font-size:14px;color:var(--soft)">Pedido registrado. Seu carimbo já está no cartão.</div>
-
-  <div id="pix" style="display:none;margin-top:18px;border:1.5px solid var(--gold);border-radius:20px;padding:18px">
-    <div style="font-size:14px;color:var(--soft)">Pague com Pix</div>
-    <div id="pix-total" style="font-size:34px;letter-spacing:-0.05em;margin-top:2px"></div>
-    <div id="chave" style="font-size:16px;margin-top:10px;word-break:break-all;letter-spacing:-0.01em;user-select:all"></div>
-    <button id="copiar" style="margin-top:14px;width:100%;height:52px;border-radius:999px;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:18px">
-      <i class="ti ti-copy" aria-hidden="true"></i><span id="copiar-txt">Copiar chave Pix</span></button>
-    <div style="font-size:13px;color:var(--soft);margin-top:10px">Mande o comprovante na conversa do WhatsApp.</div>
+  <!-- BARRA FIXA COM TOTAL -->
+  <div class="barra">
+    <div class="err" id="e-enviar"></div>
+    <div class="ok" id="ok-envio" style="display:none;font-size:14px;color:var(--soft)">Pedido registrado. Seu carimbo já está no cartão.</div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="flex:1;min-width:0">
+        <div id="qtd" style="font-size:13px;color:var(--soft)">Nenhum pote ainda</div>
+        <div id="total" style="font-size:30px;font-weight:800;line-height:1.05;letter-spacing:-0.02em">R$ 0</div>
+      </div>
+      <button id="enviar" style="height:56px;padding:0 20px;border-radius:18px;background:var(--acc);color:#fff;display:flex;align-items:center;gap:8px;font-size:18px;font-weight:800">
+        <i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:22px"></i><span id="enviar-txt">Enviar pedido</span></button>
+    </div>
   </div>
 
   <!-- RODAPÉ -->
-  <footer style="margin-top:48px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:center;align-items:center;gap:8px;font-size:13px;color:var(--soft);letter-spacing:-0.01em">
+  <footer style="padding:20px 0 28px;display:flex;justify-content:center;align-items:center;gap:8px;font-size:13px;color:var(--soft)">
     <span>Desenvolvido por</span>
     <a href="https://www.vitrapi.com/" target="_blank" rel="noopener" aria-label="Vitrapi, site do desenvolvedor"
        style="font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;font-weight:700;font-size:15px;letter-spacing:-0.5px;color:#1F1F1F;text-decoration:none">
@@ -134,18 +188,32 @@
 <script>
 (function(){
   /* ====== CONFIGURAÇÕES: edite aqui ====== */
-  // [id no banco, nome, preço, foto]  -> o id precisa ser igual ao da tabela "sabores"
+  // [id no banco, nome, preço, foto, categoria, selo]
+  // -> o id precisa ser igual ao da tabela "sabores"
+  // -> selo: texto curto em cima da foto ("Mais pedido", "Novidade") ou "" para nenhum
   const SABORES = [
-    ["chocolate", "Chocolate",             15, "chocolate.jpeg"],
-    ["prestigio", "Prestígio",             15, "prestigio.jpeg"],
-    ["cenoura",   "Cenoura com chocolate", 15, "cenoura.jpeg"],
-    ["morango",   "Ninho com morango",     15, "morango.jpeg"],
-    ["nutella",   "Ninho com Nutella",     17, "nutella.jpeg"]
+    ["chocolate", "Chocolate",             15, "chocolate.jpeg", "Chocolate", "Mais pedido"],
+    ["prestigio", "Prestígio",             15, "prestigio.jpeg", "Chocolate", ""],
+    ["cenoura",   "Cenoura com chocolate", 15, "cenoura.jpeg",   "Chocolate", ""],
+    ["morango",   "Ninho com morango",     15, "morango.jpeg",   "Ninho",     ""],
+    ["nutella",   "Ninho com Nutella",     17, "nutella.jpeg",   "Ninho",     ""]
   ];
   const BLOCOS = ["1", "2", "3", "4", "5", "6", "7"];
   const LOGO  = "logo.png";
   const FONE  = "5511955862368";
   const CHAVE = "viniciusmaia_2022@hotmail.com";
+
+  // Pix copia e cola: nome do titular e cidade, sem acento
+  const PIX_NOME   = "LV CAKES";    // até 25 letras
+  const PIX_CIDADE = "SAO PAULO";   // até 15 letras
+
+  // Horário de entregas. Dias: 0=domingo, 1=segunda ... 6=sábado.
+  // Fora do horário o site só AVISA; o pedido continua liberado.
+  // Para desligar o aviso: const HORARIO = null;
+  const HORARIO = [
+    { dias: [6, 0, 1],    abre: "11:00", fecha: "22:00" },  // sábado, domingo e segunda
+    { dias: [2, 3, 4, 5], abre: "19:00", fecha: "22:00" }   // terça a sexta
+  ];
 
   // Banco de dados (Supabase). Use só a chave publishable, nunca a secret.
   const SUPABASE_URL = "https://kbwhmketsipuciygklkg.supabase.co";
@@ -156,10 +224,77 @@
     ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
   const q = SABORES.map(() => 0);
-  let pag = "", usarBrinde = false, enviando = false, cartao = null, consulta = 0;
+  let pag = "", usarBrinde = false, enviando = false, cartao = null, consulta = 0, pixAtual = "";
   const $ = id => document.getElementById(id);
   const brl = v => v.toLocaleString("pt-BR", {style:"currency", currency:"BRL", minimumFractionDigits: v % 1 ? 2 : 0});
   $("chave").textContent = CHAVE;
+
+  /* ---------- Copiar texto ---------- */
+  // Versão imediata: funciona no mesmo instante do toque, antes de abrir o WhatsApp
+  function copiarSync(texto){
+    const ta = document.createElement("textarea");
+    ta.value = texto; ta.setAttribute("readonly", "");
+    ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+    document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, texto.length);
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch(e) {}
+    ta.remove();
+    return ok;
+  }
+  function copiar(texto, spanId, okTxt, falhaTxt){
+    const done = () => $(spanId).textContent = okTxt;
+    const fallback = () => { if (copiarSync(texto)) done(); else $(spanId).textContent = falhaTxt; };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(texto).then(done, fallback);
+    else fallback();
+  }
+
+  /* ---------- Pix copia e cola (padrão do Banco Central) ---------- */
+  const campo = (id, v) => id + String(v.length).padStart(2, "0") + v;
+  const limpar = (t, max) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^A-Za-z0-9 ]/g, "").toUpperCase().trim().slice(0, max);
+  function crc16(s){
+    let c = 0xFFFF;
+    for (let i = 0; i < s.length; i++) {
+      c ^= s.charCodeAt(i) << 8;
+      for (let j = 0; j < 8; j++) c = ((c & 0x8000) ? (c << 1) ^ 0x1021 : c << 1) & 0xFFFF;
+    }
+    return c.toString(16).toUpperCase().padStart(4, "0");
+  }
+  function pixCopiaECola(valor){
+    const conta = campo("00", "br.gov.bcb.pix") + campo("01", CHAVE);
+    let p = campo("00", "01") + campo("26", conta) + campo("52", "0000") + campo("53", "986")
+      + campo("54", Number(valor).toFixed(2)) + campo("58", "BR")
+      + campo("59", limpar(PIX_NOME, 25) || "LV CAKES") + campo("60", limpar(PIX_CIDADE, 15) || "BRASIL")
+      + campo("62", campo("05", "***")) + "6304";
+    return p + crc16(p);
+  }
+
+  /* ---------- Horário ---------- */
+  const DIAS = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
+  const minutos = t => { const [h, m] = t.split(":").map(Number); return h * 60 + (m || 0); };
+  function abertoAgora(){
+    if (!HORARIO) return true;
+    const d = new Date(), dia = d.getDay(), agora = d.getHours() * 60 + d.getMinutes();
+    return HORARIO.some(p => p.dias.includes(dia) && agora >= minutos(p.abre) && agora < minutos(p.fecha));
+  }
+  function textoDias(ds){
+    if (ds.length === 7) return "todos os dias";
+    // "seguidos" considera a virada da semana (sábado -> domingo -> segunda)
+    const seguidos = ds.every((x, i) => i === 0 || x === (ds[i - 1] + 1) % 7);
+    if (seguidos && ds.length > 2) return `${DIAS[ds[0]]} a ${DIAS[ds[ds.length - 1]]}`;
+    return ds.map(x => DIAS[x]).join(", ");
+  }
+  function textoHorario(){
+    const h = t => t.replace(":00", "h").replace(":", "h");
+    return HORARIO.map(p => `${textoDias(p.dias)}, das ${h(p.abre)} às ${h(p.fecha)}`).join("; ");
+  }
+  function avisoHorario(){
+    const fechado = !abertoAgora();
+    $("aviso-horario").style.display = fechado ? "flex" : "none";
+    if (fechado) $("aviso-horario-txt").textContent =
+      `Agora estamos fora do horário de entregas (${textoHorario()}). Pode pedir: entregamos no próximo horário.`;
+    return fechado;
+  }
 
   /* ---------- Fotos e logo ---------- */
   function img(src, alt, cls, fallback){
@@ -171,39 +306,40 @@
   const logo = img(LOGO, "Logo LV Cakes", "", () => {
     const d = document.createElement("div");
     d.setAttribute("aria-label", "Logo LV Cakes");
-    d.style.cssText = "width:64px;height:64px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font:italic 500 30px 'Cormorant Garamond',serif";
+    d.style.cssText = "width:52px;height:52px;border-radius:50%;background:var(--peach);display:flex;align-items:center;justify-content:center;color:var(--choc);font:italic 500 24px 'Cormorant Garamond',serif";
     d.textContent = "LV";
     return d;
   });
   logo.loading = "eager";
-  logo.style.cssText = "width:64px;height:64px;border-radius:50%;object-fit:cover;display:block";
+  logo.style.cssText = "width:52px;height:52px;border-radius:50%;object-fit:cover;display:block;background:#fff";
   $("logo").appendChild(logo);
 
-  /* ---------- Cartão fidelidade ---------- */
-  const selos = $("selos");
-  for (let i = 0; i < 6; i++) {
-    const s = document.createElement("div");
-    s.className = "selo" + (i === 5 ? " premio" : "");
-    s.innerHTML = `<i class="ti ${i === 5 ? "ti-gift" : "ti-cake"}" aria-hidden="true"></i>`;
-    selos.appendChild(s);
+  /* ---------- Saudação ---------- */
+  function saudar(){
+    const primeiro = $("nome").value.trim().split(/\s+/)[0];
+    $("oi").textContent = primeiro ? `Oi, ${primeiro}` : "LV Cakes";
+    $("oi-sub").textContent = primeiro ? "Qual pote vai ser hoje?" : "Bolo de pote entregue no seu bloco";
   }
 
+  /* ---------- Cartão fidelidade (anel) ---------- */
   function renderCartao(){
     const c = cartao ? cartao.carimbos : 0;
     const b = cartao ? cartao.brindes_disponiveis : 0;
-    [...selos.children].forEach((s, i) => s.classList.toggle("on", i < 5 ? i < c : b > 0));
+    $("anel").style.setProperty("--p", (b > 0 ? 100 : Math.min(c, 5) * 20) + "%");
+    $("anel-txt").innerHTML = b > 0 ? '<i class="ti ti-gift" aria-hidden="true"></i>'
+      : cartao ? `${c}/5` : '<i class="ti ti-cake" aria-hidden="true"></i>';
     let txt;
     if (!cartao) {
-      txt = db ? "Escolha o bloco e digite o apartamento no pedido para ver seus carimbos."
+      txt = db ? "Escolha o bloco e o apartamento lá embaixo para ver seus carimbos."
                : "Cada pedido vale um carimbo.";
     } else if (b > 0) {
       txt = `Você tem ${b} pote${b > 1 ? "s" : ""} grátis. Use no pedido abaixo.`;
     } else {
       const f = 5 - c;
-      txt = `Falta${f > 1 ? "m" : ""} ${f} pedido${f > 1 ? "s" : ""} para o seu pote grátis.`;
+      txt = `Mais ${f} pedido${f > 1 ? "s" : ""} e o próximo pote é por nossa conta.`;
     }
     $("cartao-status").textContent = txt;
-    selos.setAttribute("aria-label", cartao
+    $("anel").setAttribute("aria-label", cartao
       ? `${c} de 5 carimbos${b > 0 ? ", pote grátis disponível" : ""}`
       : "Cartão com 5 carimbos e 1 pote grátis");
     $("brinde-box").style.display = b > 0 ? "block" : "none";
@@ -232,31 +368,69 @@
   }
   $("usar-brinde").onclick = () => setBrinde(!usarBrinde);
 
-  /* ---------- Cardápio ---------- */
+  /* ---------- Cardápio (cards deslizantes) ---------- */
   const menu = $("menu");
-  SABORES.forEach(([id, n, p, f], i) => {
-    const r = document.createElement("div"); r.className = "row";
-    r.appendChild(img(f, "Bolo de pote " + n, "ph", () => {
-      const d = document.createElement("div"); d.className = "ph"; d.style.background = "var(--tint)"; return d;
+  const cards = [], setQtd = [];
+  SABORES.forEach(([id, n, p, f, cat, selo], i) => {
+    const r = document.createElement("article"); r.className = "card"; r.dataset.cat = cat || "";
+    const foto = document.createElement("div"); foto.className = "foto";
+    foto.appendChild(img(f, "Bolo de pote " + n, "ph", () => {
+      const d = document.createElement("div"); d.className = "ph"; d.style.background = "var(--peach)"; return d;
     }));
-    const t = document.createElement("div");
-    t.innerHTML = `<div style="font-size:20px;line-height:1.1">${n}</div><div style="font-size:14px;color:var(--soft);margin-top:3px">${brl(p)}</div>`;
+    if (selo) { const s = document.createElement("span"); s.className = "selo-sab"; s.textContent = selo; foto.appendChild(s); }
+    r.appendChild(foto);
+    const t = document.createElement("div"); t.className = "nome-sabor"; t.textContent = n;
     r.appendChild(t);
-    const s = document.createElement("div"); s.style.cssText = "display:flex;align-items:center;gap:8px";
-    s.innerHTML = `<button class="stp" aria-label="Remover ${n}"><i class="ti ti-minus" aria-hidden="true"></i></button><span style="min-width:20px;text-align:center;font-size:20px" aria-live="polite">0</span><button class="stp" aria-label="Adicionar ${n}"><i class="ti ti-plus" aria-hidden="true"></i></button>`;
-    r.appendChild(s);
-    const [menos, mais] = s.querySelectorAll("button"), cont = s.querySelector("span");
-    const up = d => {
-      q[i] = Math.max(0, Math.min(20, q[i] + d));
+    const l = document.createElement("div"); l.className = "linha";
+    l.innerHTML = `<span class="preco">${brl(p)}</span><span style="display:flex;align-items:center;gap:8px"><button class="stp" aria-label="Remover ${n}"><i class="ti ti-minus" aria-hidden="true"></i></button><span style="min-width:16px;text-align:center;font-size:17px;font-weight:800" aria-live="polite">0</span><button class="stp mais" aria-label="Adicionar ${n}"><i class="ti ti-plus" aria-hidden="true"></i></button></span>`;
+    r.appendChild(l);
+    const [menos, mais] = l.querySelectorAll("button"), cont = l.querySelector("[aria-live]");
+    const set = v => {
+      q[i] = Math.max(0, Math.min(20, v));
       cont.textContent = q[i];
       r.classList.toggle("on", q[i] > 0);
       $("e-itens").textContent = ""; $("e-enviar").textContent = "";
       $("pix").style.display = "none"; $("ok-envio").style.display = "none";
       calc();
     };
-    menos.onclick = () => up(-1); mais.onclick = () => up(1);
-    menu.appendChild(r);
+    menos.onclick = () => set(q[i] - 1); mais.onclick = () => set(q[i] + 1);
+    setQtd[i] = set;
+    menu.appendChild(r); cards.push(r);
   });
+
+  /* ---------- Filtros por categoria ---------- */
+  const cats = ["Todos", ...new Set(SABORES.map(s => s[4]).filter(Boolean))];
+  if (cats.length > 2) {
+    cats.forEach(c => {
+      const b = document.createElement("button");
+      b.className = "chip" + (c === "Todos" ? " on" : "");
+      b.textContent = c; b.setAttribute("aria-pressed", c === "Todos");
+      b.onclick = () => {
+        [...$("chips").children].forEach(x => { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b); });
+        let vis = 0;
+        cards.forEach(card => { const ok = c === "Todos" || card.dataset.cat === c; card.style.display = ok ? "" : "none"; if (ok) vis++; });
+        $("dica").style.visibility = vis > 1 ? "visible" : "hidden";
+        menu.scrollLeft = 0;
+      };
+      $("chips").appendChild(b);
+    });
+  } else $("chips").style.display = "none";
+
+  /* ---------- Repetir último pedido ---------- */
+  function mostrarRepetir(){
+    let ult = null;
+    try { ult = JSON.parse(localStorage.getItem("lv_ultimo") || "null"); } catch(e) {}
+    const itens = ult ? SABORES.map(([id], i) => ult[id] > 0 ? [i, Math.min(20, ult[id] | 0)] : null).filter(Boolean) : [];
+    if (!itens.length) { $("repetir").style.display = "none"; return; }
+    $("repetir-txt").textContent = "Repetir último pedido: " + itens.map(([i, x]) => `${x}x ${SABORES[i][1]}`).join(", ");
+    $("repetir").style.display = "flex";
+    $("repetir").onclick = () => {
+      const todos = $("chips").firstChild; if (todos) todos.click();
+      SABORES.forEach((_, i) => setQtd[i](0));
+      itens.forEach(([i, x]) => setQtd[i](x));
+      $("repetir-txt").textContent = "Pronto, pedido repetido. Confira e envie.";
+    };
+  }
 
   function calc(){
     const n = q.reduce((s, x) => s + x, 0);
@@ -292,7 +466,7 @@
 
   /* ---------- Pagamento ---------- */
   const notas = {
-    "Pix": "A chave Pix aparece quando você enviar o pedido.",
+    "Pix": "Ao enviar, o código Pix copia e cola já fica copiado. Mande a mensagem no WhatsApp e depois é só colar no app do banco.",
     "Crédito": "Enviamos o link de pagamento no WhatsApp.",
     "Dinheiro": "Pagamento na entrega."
   };
@@ -323,6 +497,7 @@
       if (k !== "nome") { clearTimeout(timer); timer = setTimeout(carregarCartao, 500); }
     });
   });
+  $("nome").addEventListener("input", saudar);
 
   function abrir(url, janela){
     if (janela && !janela.closed) { janela.location.href = url; return; }
@@ -341,13 +516,22 @@
     if (!bloco) { $("e-bloco").textContent = "Escolha o seu bloco."; ok = false; }
     if (!apto)  { $("e-apto").textContent  = "Digite o número do apartamento."; ok = false; }
     if (!pag)   { $("e-pay").textContent   = "Escolha a forma de pagamento."; ok = false; }
-    if (!ok) return;
+    if (!ok) {
+      const primeiroErro = [...document.querySelectorAll("#lv .err")].find(e => e.textContent);
+      if (primeiroErro) primeiroErro.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
 
     try { ["nome","bloco","apto"].forEach(k => localStorage.setItem("lv_" + k, $(k).value.trim())); } catch(e){}
 
     let { desc, total } = calc();
     const troco = $("troco").value.trim();
+    const foraHorario = avisoHorario();
     let pedidoId = null, naoRegistrado = false, infoCartao = null;
+
+    // Pix: copia o código já no toque (depois que o WhatsApp abre, o celular não deixa mais)
+    let codigoPix = (pag === "Pix" && total > 0) ? pixCopiaECola(total) : "";
+    const copiouAuto = codigoPix ? copiarSync(codigoPix) : false;
 
     // Abre a aba já no clique (senão o navegador bloqueia), e só depois coloca o link
     const janela = db ? window.open("", "_blank") : null;
@@ -381,6 +565,9 @@
       enviando = false; $("enviar-txt").textContent = "Enviar pedido";
     }
 
+    // Se o banco devolveu outro total, refaz o código com o valor certo
+    codigoPix = (pag === "Pix" && total > 0) ? pixCopiaECola(total) : "";
+
     const itensTxt = SABORES.map(([, n, p], i) => q[i] ? `${q[i]}x ${n} (${brl(q[i] * p)})` : null).filter(Boolean);
     let pg = pag === "Crédito" ? "Crédito (enviar link de pagamento)" : pag;
     if (pag === "Dinheiro" && troco) pg += ` (troco para R$ ${troco})`;
@@ -392,6 +579,11 @@
         : `Cartão fidelidade: ${infoCartao.carimbos} de 5`];
     }
 
+    // Se for Pix, o código e a chave vão na própria mensagem do WhatsApp
+    const linhasPix = codigoPix
+      ? ["", "*Pix copia e cola*", `Valor: ${brl(total)}`, codigoPix, "", `Chave Pix: ${CHAVE}`]
+      : [];
+
     const msg = [
       `*Pedido LV Cakes${pedidoId ? " nº " + pedidoId : ""}*`, "",
       ...itensTxt,
@@ -399,13 +591,26 @@
       "", `*Total: ${brl(total)}*`, "",
       `Nome: ${nome}`, `Bloco ${bloco}, apto ${apto}`, `Pagamento: ${pg}`,
       ...linhaCartao,
+      ...linhasPix,
+      ...(foraHorario ? ["", "(pedido feito fora do horário de entregas)"] : []),
       ...(naoRegistrado ? ["", "(pedido não registrado no sistema)"] : [])
     ].join("\n");
 
-    if (pag === "Pix" && total > 0) {
+    // Guarda os sabores para o botão "Repetir último pedido"
+    const ultimo = {};
+    SABORES.forEach(([id], i) => { if (q[i]) ultimo[id] = q[i]; });
+    try { localStorage.setItem("lv_ultimo", JSON.stringify(ultimo)); } catch(e) {}
+
+    if (codigoPix) {
+      pixAtual = codigoPix;
       $("pix-total").textContent = brl(total);
+      $("pix-dica").textContent = copiouAuto
+        ? "O código já foi copiado. Abra o app do banco, escolha Pix copia e cola e cole."
+        : "Toque no botão abaixo, abra o app do banco, escolha Pix copia e cola e cole.";
+      $("copiar-codigo-txt").textContent = "Copiar código Pix";
       $("copiar-txt").textContent = "Copiar chave Pix";
       $("pix").style.display = "block";
+      $("pix").scrollIntoView({ block: "center" });
     }
     if (db && pedidoId) {
       $("ok-envio").style.display = "block";
@@ -416,21 +621,13 @@
     abrir(`https://wa.me/${FONE}?text=${encodeURIComponent(msg)}`, janela);
   };
 
-  /* ---------- Copiar chave Pix ---------- */
-  $("copiar").onclick = () => {
-    const done = () => $("copiar-txt").textContent = "Chave copiada";
-    const fallback = () => {
-      const ta = document.createElement("textarea");
-      ta.value = CHAVE; ta.style.cssText = "position:absolute;left:-9999px";
-      document.body.appendChild(ta); ta.select();
-      try { document.execCommand("copy"); done(); }
-      catch(e) { $("copiar-txt").textContent = "Segure a chave para copiar"; }
-      ta.remove();
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(CHAVE).then(done, fallback);
-    else fallback();
-  };
+  /* ---------- Botões de copiar do quadro Pix ---------- */
+  $("copiar-codigo").onclick = () => copiar(pixAtual, "copiar-codigo-txt", "Código copiado", "Não deu para copiar, use a chave abaixo");
+  $("copiar").onclick = () => copiar(CHAVE, "copiar-txt", "Chave copiada", "Segure a chave para copiar");
 
+  saudar();
+  avisoHorario();
+  mostrarRepetir();
   renderCartao();
   calc();
   carregarCartao();
