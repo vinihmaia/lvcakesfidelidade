@@ -11,7 +11,7 @@
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="LV Cakes">
 <meta property="og:title" content="LV Cakes | Bolo de pote entregue no seu bloco">
-<meta property="og:description" content="Chocolate, Prestígio, Cenoura, Ninho com morango e Ninho com Nutella. A partir de R$ 15. Cartão fidelidade: compre 5, ganhe 1.">
+<meta property="og:description" content="Chocolate, Prestígio, Cenoura, Ninho com morango e Ninho com Nutella. A partir de R$ 15. Cartão fidelidade: compre 5 vezes e ganhe 1 pote.">
 <meta property="og:image" content="https://SEU-SITE/morango.jpeg">  <!-- ⚠️ CONFIRA: endereço real do site -->
 <meta property="og:url" content="https://SEU-SITE/">                <!-- ⚠️ CONFIRA: endereço real do site -->
 
@@ -120,7 +120,7 @@
   <section aria-labelledby="cartao-titulo" style="margin-top:22px;background:var(--choc);color:var(--cream-t);border-radius:22px;padding:16px;display:flex;align-items:center;gap:14px">
     <div class="anel" id="anel" role="img"><div class="anel-in" id="anel-txt"></div></div>
     <div style="min-width:0">
-      <h2 id="cartao-titulo" style="font-size:13px;margin:0;font-weight:700;color:var(--peach2)">Cartão fidelidade · compre 5, ganhe 1</h2>
+      <h2 id="cartao-titulo" style="font-size:13px;margin:0;font-weight:700;color:var(--peach2)">Cartão fidelidade · compre 5 vezes, ganhe 1</h2>
       <p id="cartao-status" style="font-size:15px;margin:4px 0 0;line-height:1.35"></p>
     </div>
   </section>
@@ -353,12 +353,12 @@
     let txt;
     if (!cartao) {
       txt = db ? "Escolha o bloco e o apartamento lá embaixo para ver seus carimbos."
-               : "Cada pedido vale um carimbo.";
+               : "Cada compra vale um carimbo.";
     } else if (b > 0) {
       txt = `Você tem ${b} pote${b > 1 ? "s" : ""} grátis. Use no pedido abaixo.`;
     } else {
       const f = 5 - c;
-      txt = `Mais ${f} pedido${f > 1 ? "s" : ""} e o próximo pote é por nossa conta.`;
+      txt = `Mais ${f} compra${f > 1 ? "s" : ""} e o próximo pote é por nossa conta.`;
     }
     $("cartao-status").textContent = txt;
     $("anel").setAttribute("aria-label", cartao
