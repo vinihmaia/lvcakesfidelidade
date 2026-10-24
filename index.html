@@ -12,8 +12,8 @@
 <meta property="og:site_name" content="LV Cakes">
 <meta property="og:title" content="LV Cakes | Bolo de pote entregue no seu bloco">
 <meta property="og:description" content="Chocolate, Prestígio, Cenoura, Ninho com morango e Ninho com Nutella. A partir de R$ 15. Cartão fidelidade: compre 5 vezes e ganhe 1 pote.">
-<meta property="og:image" content="https://SEU-SITE/morango.jpeg">  <!-- ⚠️ CONFIRA: endereço real do site -->
-<meta property="og:url" content="https://SEU-SITE/">                <!-- ⚠️ CONFIRA: endereço real do site -->
+<meta property="og:image" content="https://lvcakes.vitrapi.com/morango.jpeg">
+<meta property="og:url" content="https://lvcakes.vitrapi.com/">
 
 <meta name="theme-color" content="#FFF4EA">
 <link rel="icon" href="logo.png">
@@ -35,6 +35,10 @@
   /* aviso de horário */
   #lv .aviso{margin-top:18px;background:var(--peach);color:var(--choc);border-radius:16px;padding:12px 14px;font-size:14px;line-height:1.4;gap:10px;align-items:flex-start}
   #lv .aviso i{font-size:20px;flex:none}
+
+  /* faixa da promoção */
+  #lv .promo{margin-top:12px;background:var(--acc);color:#fff;border-radius:16px;padding:12px 14px;font-size:15px;font-weight:800;display:flex;align-items:center;gap:10px}
+  #lv .promo i{font-size:22px;flex:none}
 
   /* cartão fidelidade em anel */
   #lv .anel{width:64px;height:64px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
@@ -93,6 +97,43 @@
 
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
   @media (prefers-reduced-motion:reduce){#lv .card{transition:none}}
+
+  /* ===== TEMA DE HALLOWEEN (liga sozinho pelo JavaScript) ===== */
+  body.halloween{background:#120A1C}
+  #lv.halloween{--ink:#EADCFF;--soft:#B9A3DB;--line:rgba(234,220,255,.14);--choc:#24163A;--peach:#2E1F47;--peach2:#8BFF2E;
+      --acc:#FF7518;--cream:#120A1C;--cream-t:#EADCFF;position:relative;padding-top:56px}
+  #lv.halloween .card,#lv.halloween #repetir{background:#24163A}
+  #lv.halloween .fld input,#lv.halloween .blc button,#lv.halloween .pay{background:#1E1430}
+  #lv.halloween .fld input::placeholder{color:rgba(234,220,255,.3)}
+  #lv.halloween .chip.on,#lv.halloween .blc button.on,#lv.halloween .pay.on{background:#8BFF2E;border-color:#8BFF2E;color:#120A1C}
+  #lv.halloween .aviso,#lv.halloween #usar-brinde{color:#EADCFF}
+  #lv.halloween #usar-brinde.on{background:#8BFF2E;color:#120A1C}
+  #lv.halloween .err{color:#FF8A8A}
+  #lv.halloween .selo-sab{background:#8BFF2E;color:#120A1C}
+  #lv.halloween section[aria-labelledby="cartao-titulo"]{border:1.5px solid #A35CFF}
+  #lv.halloween #pix{background:#24163A !important}
+  #lv.halloween #copiar{color:#EADCFF !important}
+  #lv.halloween footer a[href*="vitrapi"]{color:#EADCFF !important}
+
+  /* faixa pulsando */
+  #lv.halloween .promo{background:#8BFF2E;color:#120A1C;animation:lv-pulsa 1.8s ease-in-out infinite}
+  @keyframes lv-pulsa{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+
+  /* gosma escorrendo */
+  #lv .gosma{position:absolute;top:0;left:0;right:0;height:48px;pointer-events:none;z-index:1}
+  #lv .gosma svg{display:block;width:100%;height:48px}
+  #lv .pingo{transform-box:fill-box;transform-origin:top;animation:lv-pinga 3s ease-in-out infinite}
+  @keyframes lv-pinga{0%,100%{transform:scaleY(.55)}50%{transform:scaleY(1)}}
+
+  /* morcegos voando */
+  .morcegos{position:fixed;top:0;left:0;right:0;height:120px;pointer-events:none;z-index:6;overflow:hidden}
+  .morcego{position:absolute;left:0;animation:lv-voa 18s linear infinite backwards}
+  .morcego svg{display:block;fill:#B9A3DB;opacity:.75;animation:lv-bate .35s ease-in-out infinite}
+  @keyframes lv-voa{0%{transform:translate(-60px,0)}25%{transform:translate(25vw,14px)}50%{transform:translate(50vw,0)}75%{transform:translate(75vw,14px)}100%{transform:translate(calc(100vw + 60px),0)}}
+  @keyframes lv-bate{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.45)}}
+
+  /* quem pediu "menos movimento" no celular não vê animações */
+  @media (prefers-reduced-motion:reduce){.morcegos{display:none}#lv.halloween .promo,#lv .pingo{animation:none}}
 </style>
 </head>
 <body>
@@ -124,6 +165,11 @@
       <p id="cartao-status" style="font-size:15px;margin:4px 0 0;line-height:1.35"></p>
     </div>
   </section>
+
+  <!-- FAIXA DA PROMOÇÃO (só aparece nas datas da promoção) -->
+  <div class="promo" id="promo" style="display:none">
+    <i class="ti ti-discount" aria-hidden="true"></i><span id="promo-txt"></span>
+  </div>
 
   <!-- CARDÁPIO -->
   <div class="chips" id="chips" role="group" aria-label="Filtrar sabores"></div>
@@ -209,9 +255,6 @@
 (function(){
   /* ====== CONFIGURAÇÕES: edite aqui ====== */
   // [id no banco, nome, preço, foto, categoria, selo]
-  // -> o id precisa ser igual ao da tabela "sabores"
-  // -> selo: texto curto em cima da foto ("Mais pedido", "Novidade") ou "" para nenhum
-  // ⚠️ CONFIRA: em qual sabor fica o selo "Mais pedido"
   const SABORES = [
     ["chocolate", "Chocolate",             15, "chocolate.jpeg", "Chocolate", "Mais pedido"],
     ["prestigio", "Prestígio",             15, "prestigio.jpeg", "Chocolate", ""],
@@ -224,19 +267,33 @@
   const FONE  = "5511955862368";
   const CHAVE = "viniciusmaia_2022@hotmail.com";
 
-  // Pix copia e cola: nome do titular e cidade, sem acento
-  const PIX_NOME   = "LV CAKES";    // ⚠️ CONFIRA: até 25 letras
-  const PIX_CIDADE = "SAO PAULO";   // ⚠️ CONFIRA: até 15 letras
+  const PIX_NOME   = "LV CAKES";    // até 25 letras
+  const PIX_CIDADE = "SAO PAULO";   // até 15 letras
 
-  // Horário de entregas. Dias: 0=domingo, 1=segunda ... 6=sábado.
-  // Fora do horário o site só AVISA; o pedido continua liberado.
-  // Para desligar o aviso: const HORARIO = null;
+  // Horário de entregas. Dias: 0=domingo ... 6=sábado. Para desligar: const HORARIO = null;
   const HORARIO = [
-    { dias: [6, 0, 1],    abre: "11:00", fecha: "22:00" },  // sábado, domingo e segunda
-    { dias: [2, 3, 4, 5], abre: "19:00", fecha: "22:00" }   // terça a sexta
+    { dias: [6, 0, 1],    abre: "11:00", fecha: "22:00" },
+    { dias: [2, 3, 4, 5], abre: "19:00", fecha: "22:00" }
   ];
 
-  // Banco de dados (Supabase). Use só a chave publishable, nunca a secret.
+  // Promoção: compre 3 e leve 1 (4 potes), compre 6 e leve 2 (8 potes).
+  // faixas: [a partir de X potes no carrinho, quantos saem grátis], da MAIOR para a menor.
+  // Os potes grátis são sempre os mais baratos do pedido.
+  // ⚠️ Datas e faixas precisam ser iguais às da função calcular_promocao no banco.
+  // Para desligar: const COMBO = null;
+  const COMBO = {
+    nome: "Halloween",
+    de:  "2026-10-24",
+    ate: "2026-10-27",
+    faixas: [[8, 2], [4, 1]],
+    faixa_txt: "🎃 Promoção de Halloween: compre 3 e leve 1 grátis. Compre 6 e leve 2 grátis!"
+  };
+
+  // Tema de Halloween: liga sozinho entre as datas abaixo.
+  // Para ver antes, abra o site com ?tema=halloween no fim do endereço.
+  // Para desligar: const TEMA = null;
+  const TEMA = { nome: "halloween", de: "2026-10-24", ate: "2026-10-27", selo: "👻 Assombrado" };
+
   const SUPABASE_URL = "https://kbwhmketsipuciygklkg.supabase.co";
   const SUPABASE_KEY = "sb_publishable_SaOAF_gTTG9tqDTo2Dax9g_aZ4NA-JQ";
   /* ======================================== */
@@ -251,8 +308,17 @@
   const brl = v => v.toLocaleString("pt-BR", {style:"currency", currency:"BRL", minimumFractionDigits: v % 1 ? 2 : 0});
   $("chave").textContent = CHAVE;
 
+  /* ---------- Datas (promoção e tema) ---------- */
+  const hojeISO = () => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  };
+  const comboAtivo = () => !!COMBO && hojeISO() >= COMBO.de && hojeISO() <= COMBO.ate;
+  const temaAtivo = () => !!TEMA && (
+    new URLSearchParams(location.search).get("tema") === TEMA.nome ||
+    (hojeISO() >= TEMA.de && hojeISO() <= TEMA.ate));
+
   /* ---------- Copiar texto ---------- */
-  // Versão imediata: funciona no mesmo instante do toque, antes de abrir o WhatsApp
   function copiarSync(texto){
     const ta = document.createElement("textarea");
     ta.value = texto; ta.setAttribute("readonly", "");
@@ -301,7 +367,6 @@
   }
   function textoDias(ds){
     if (ds.length === 7) return "todos os dias";
-    // "seguidos" considera a virada da semana (sábado -> domingo -> segunda)
     const seguidos = ds.every((x, i) => i === 0 || x === (ds[i - 1] + 1) % 7);
     if (seguidos && ds.length > 2) return `${DIAS[ds[0]]} a ${DIAS[ds[ds.length - 1]]}`;
     return ds.map(x => DIAS[x]).join(", ");
@@ -375,9 +440,9 @@
     if (!bloco || !apto) { cartao = null; renderCartao(); return; }
     try {
       const { data, error } = await db.rpc("consultar_cartao", { p_bloco: bloco, p_apto: apto });
-      if (minha !== consulta) return;           // chegou uma consulta mais nova
+      if (minha !== consulta) return;
       if (!error && data && data[0]) { cartao = data[0]; renderCartao(); }
-    } catch (e) { /* sem internet: o cartão só não atualiza */ }
+    } catch (e) {}
   }
 
   function setBrinde(v){
@@ -462,7 +527,7 @@
     SABORES.forEach((s, i) => {
       const off = esgotado[i];
       cards[i].classList.toggle("esgotado", off);
-      cards[i].style.order = off ? 1 : 0;           // esgotados vão para o fim
+      cards[i].style.order = off ? 1 : 0;
       cards[i].querySelectorAll(".stp").forEach(b => { b.disabled = off; });
       if (off && q[i] > 0) { setQtd[i](0); removidos.push(s[1]); }
     });
@@ -478,20 +543,41 @@
       data.forEach(s => { mapa[s.id] = s.ativo; });
       SABORES.forEach(([id], i) => { esgotado[i] = mapa[id] === false; });
       const chave = esgotado.join();
-      if (chave === ultimaChave) return;           // nada mudou
+      if (chave === ultimaChave) return;
       ultimaChave = chave;
       aplicarEstoque();
-    } catch (e) { /* sem internet: segue como está */ }
+    } catch (e) {}
   }
 
+  /* ---------- Conta do pedido ---------- */
   function calc(){
     const n = q.reduce((s, x) => s + x, 0);
     const sub = q.reduce((s, x, i) => s + x * SABORES[i][2], 0);
-    let desc = 0;
-    if (usarBrinde && n) desc = Math.min(...SABORES.filter((_, i) => q[i]).map(x => x[2]));
-    $("qtd").textContent = n ? `${n} pote${n > 1 ? "s" : ""}${desc ? ", 1 grátis" : ""}` : "Nenhum pote ainda";
+
+    // Um preço para cada pote, do mais barato para o mais caro
+    const precos = [];
+    q.forEach((x, i) => { for (let k = 0; k < x; k++) precos.push(SABORES[i][2]); });
+    precos.sort((a, b) => a - b);
+
+    // Promoção: os potes grátis são sempre os mais baratos
+    const faixa = comboAtivo() ? COMBO.faixas.find(([min]) => n >= min) : null;
+    const gratisPromo = faixa ? faixa[1] : 0;
+    const descCombo = precos.slice(0, gratisPromo).reduce((s, p) => s + p, 0);
+
+    // Cartão fidelidade: o próximo pote mais barato que ainda não está grátis
+    const descCartao = (usarBrinde && n > gratisPromo) ? precos[gratisPromo] : 0;
+
+    const gratis = gratisPromo + (descCartao ? 1 : 0);
+    const desc = descCombo + descCartao;
+
+    let txt = n ? `${n} pote${n > 1 ? "s" : ""}${gratis ? `, ${gratis} grátis` : ""}` : "Nenhum pote ainda";
+    // Empurrãozinho: falta 1 pote para a próxima faixa
+    const prox = comboAtivo() && n && COMBO.faixas.find(([min]) => min - n === 1);
+    if (prox) txt = `🎃 Mais 1 pote e ${prox[1]} ${prox[1] > 1 ? "saem" : "sai"} grátis!`;
+
+    $("qtd").textContent = txt;
     $("total").textContent = brl(sub - desc);
-    return { n, sub, desc, total: sub - desc };
+    return { n, sub, desc, descCombo, descCartao, gratisPromo, total: sub - desc };
   }
 
   /* ---------- Botões de bloco (1 a 7) ---------- */
@@ -576,7 +662,8 @@
 
     try { ["nome","bloco","apto"].forEach(k => localStorage.setItem("lv_" + k, $(k).value.trim())); } catch(e){}
 
-    let { desc, total } = calc();
+    let { descCombo, descCartao, gratisPromo, total } = calc();
+    let descExtra = 0;   // usado só se o banco calcular um desconto diferente do site
     const troco = $("troco").value.trim();
     const foraHorario = avisoHorario();
     let pedidoId = null, naoRegistrado = false, infoCartao = null;
@@ -607,8 +694,12 @@
           }
           naoRegistrado = true;
         } else {
-          pedidoId = data.id; total = Number(data.total); desc = Number(data.desconto);
-          // Busca como ficou o cartão, para avisar a loja na mensagem
+          pedidoId = data.id; total = Number(data.total);
+          // O banco é quem manda: se o desconto dele for diferente do site, a mensagem usa o do banco
+          const descBanco = Number(data.desconto || 0);
+          if (Math.abs(descBanco - (descCombo + descCartao)) > 0.009) {
+            descCombo = 0; descCartao = 0; descExtra = descBanco;
+          }
           try {
             const r = await db.rpc("consultar_cartao", { p_bloco: bloco, p_apto: apto });
             if (!r.error && r.data && r.data[0]) infoCartao = r.data[0];
@@ -632,7 +723,6 @@
         : `Cartão fidelidade: ${infoCartao.carimbos} de 5`];
     }
 
-    // Se for Pix, o código e a chave vão na própria mensagem do WhatsApp
     const linhasPix = codigoPix
       ? ["", "*Pix copia e cola*", `Valor: ${brl(total)}`, codigoPix, "", `Chave Pix: ${CHAVE}`]
       : [];
@@ -640,7 +730,9 @@
     const msg = [
       `*Pedido LV Cakes${pedidoId ? " nº " + pedidoId : ""}*`, "",
       ...itensTxt,
-      ...(desc ? [`Pote grátis do cartão fidelidade: -${brl(desc)}`] : []),
+      ...(descCombo  ? [`Promoção de ${COMBO.nome} (${gratisPromo} grátis): -${brl(descCombo)}`] : []),
+      ...(descCartao ? [`Pote grátis do cartão fidelidade: -${brl(descCartao)}`] : []),
+      ...(descExtra  ? [`Desconto aplicado: -${brl(descExtra)}`] : []),
       "", `*Total: ${brl(total)}*`, "",
       `Nome: ${nome}`, `Bloco ${bloco}, apto ${apto}`, `Pagamento: ${pg}`,
       ...linhaCartao,
@@ -677,6 +769,49 @@
   /* ---------- Botões de copiar do quadro Pix ---------- */
   $("copiar-codigo").onclick = () => copiar(pixAtual, "copiar-codigo-txt", "Código copiado", "Não deu para copiar, use a chave abaixo");
   $("copiar").onclick = () => copiar(CHAVE, "copiar-txt", "Chave copiada", "Segure a chave para copiar");
+
+  /* ---------- Faixa da promoção ---------- */
+  if (comboAtivo() && $("promo")) {
+    $("promo-txt").textContent = COMBO.faixa_txt;
+    $("promo").style.display = "flex";
+  }
+
+  /* ---------- Tema de Halloween ---------- */
+  const BATE_ASA = '<path d="M32 12C30 8 28 6 27 4L29 9C24 7 18 6 12 8C10 12 6 14 0 14C6 16 9 20 10 26C14 22 20 21 24 24C26 22 29 21 32 24C35 21 38 22 40 24C44 21 50 22 54 26C55 20 58 16 64 14C58 14 54 12 52 8C46 6 40 7 35 9L37 4C36 6 34 8 32 12Z"/>';
+
+  function ligarTema(){
+    document.documentElement.style.background = "#120A1C";
+    document.body.classList.add("halloween");
+    $("lv").classList.add("halloween");
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = "#120A1C";   // pinta a barra do navegador no celular
+
+    // Selo "Assombrado" em todos os bolos
+    cards.forEach(card => {
+      let s = card.querySelector(".selo-sab");
+      if (!s) { s = document.createElement("span"); s.className = "selo-sab"; card.querySelector(".foto").appendChild(s); }
+      s.textContent = TEMA.selo;
+    });
+
+    // Gosma escorrendo do topo: [posição, comprimento do pingo, atraso]
+    const pingos = [[30, 30, 0], [95, 22, .8], [150, 38, 1.6], [215, 18, .4], [270, 34, 1.2], [340, 26, 2], [380, 20, .6]];
+    const g = document.createElement("div");
+    g.className = "gosma"; g.setAttribute("aria-hidden", "true");
+    g.innerHTML = `<svg viewBox="0 0 400 48" preserveAspectRatio="none"><g fill="#8BFF2E">
+      <path d="M0 0H400V10Q390 16 380 10T360 10T340 10T320 10T300 10T280 10T260 10T240 10T220 10T200 10T180 10T160 10T140 10T120 10T100 10T80 10T60 10T40 10T20 10T0 10Z"/>
+      ${pingos.map(([x, h, d]) => `<rect class="pingo" x="${x}" y="6" width="9" height="${h}" rx="4.5" style="animation-delay:${d}s"/>`).join("")}
+    </g></svg>`;
+    $("lv").prepend(g);
+
+    // Morcegos: [altura na tela, tamanho, espera para sair, tempo da travessia]
+    const m = document.createElement("div");
+    m.className = "morcegos"; m.setAttribute("aria-hidden", "true");
+    m.innerHTML = [[14, 38, 0, 16], [50, 26, 6, 22], [78, 32, 11, 19]].map(([top, tam, atraso, dur]) =>
+      `<span class="morcego" style="top:${top}px;animation-duration:${dur}s;animation-delay:${atraso}s">
+        <svg viewBox="0 0 64 32" width="${tam}" height="${tam / 2}">${BATE_ASA}</svg></span>`).join("");
+    document.body.appendChild(m);
+  }
+  if (temaAtivo()) ligarTema();
 
   saudar();
   avisoHorario();

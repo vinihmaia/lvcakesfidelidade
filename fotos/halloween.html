@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LV Cakes | Artes de Halloween</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Creepster&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#2A2333;font-family:'Nunito',sans-serif;color:#EADCFF;display:flex;flex-direction:column;align-items:center;gap:18px;padding:28px 12px 60px}
+  .titulo{font-size:16px;font-weight:800;margin-top:14px}
+  .dica{font-size:13px;color:#B9A3DB;max-width:540px;text-align:center;line-height:1.5}
+
+  .arte{position:relative;overflow:hidden;border-radius:22px;background:#120A1C;box-sizing:border-box;display:flex;flex-direction:column}
+  #feed{width:540px;height:675px;padding:58px 28px 24px}
+  #status{width:450px;height:800px;padding:66px 26px 30px}
+
+  .gosma{position:absolute;top:0;left:0;right:0;height:52px;z-index:2}
+  .gosma svg{display:block;width:100%;height:100%}
+  .morc{position:absolute;fill:#B9A3DB;opacity:.65;z-index:1}
+
+  .topo{display:flex;align-items:center;gap:12px;position:relative;z-index:3}
+  .logo{border-radius:50%;background-color:#FFFBF4;background-repeat:no-repeat;flex:none;border:2px solid #8BFF2E}
+  .pill{margin-left:auto;background:#FF7518;color:#120A1C;font-size:12px;font-weight:900;padding:6px 12px;border-radius:999px;white-space:nowrap}
+
+  .sub{color:#8BFF2E;font-weight:900;letter-spacing:.08em;position:relative;z-index:3}
+  .hw{font-family:'Creepster',cursive;color:#FF7518;line-height:.95;letter-spacing:.02em;position:relative;z-index:3}
+
+  .ofertas{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative;z-index:3}
+  .of{border-radius:16px;padding:10px 12px;text-align:center;border:2px solid #A35CFF;background:#24163A}
+  .of.forte{background:#8BFF2E;border-color:#8BFF2E;color:#120A1C}
+  .of .l{font-size:16px;font-weight:800}
+  .of .g{font-size:28px;font-weight:900;line-height:1.05}
+
+  .grade{display:grid;grid-template-columns:1.3fr 1fr;grid-template-rows:1fr 1fr;gap:8px;position:relative;z-index:3}
+  .foto{border-radius:16px;background-color:#2E1F47;background-repeat:no-repeat;border:2px solid #A35CFF}
+
+  .mini{font-size:12px;color:#B9A3DB;text-align:center}
+  .rodape{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+  .datas{font-size:13px;color:#B9A3DB;line-height:1.45}
+  .datas b{color:#EADCFF;font-size:17px}
+  .cta{background:#FF7518;color:#120A1C;font-weight:900;font-size:16px;padding:10px 18px;border-radius:999px;white-space:nowrap;text-align:center}
+</style>
+</head>
+<body>
+
+  <!-- desenho do morcego, reaproveitado nas duas artes -->
+  <svg width="0" height="0" style="position:absolute"><defs>
+    <path id="asa" d="M32 12C30 8 28 6 27 4L29 9C24 7 18 6 12 8C10 12 6 14 0 14C6 16 9 20 10 26C14 22 20 21 24 24C26 22 29 21 32 24C35 21 38 22 40 24C44 21 50 22 54 26C55 20 58 16 64 14C58 14 54 12 52 8C46 6 40 7 35 9L37 4C36 6 34 8 32 12Z"/>
+  </defs></svg>
+
+  <!-- ===================== 1. POST PARA O GRUPO ===================== -->
+  <div class="titulo">1. Post para o grupo</div>
+  <div class="dica">Aperte Windows + Shift + S e selecione só o retângulo roxo.</div>
+
+  <div class="arte" id="feed">
+    <svg class="morc" style="right:26px;top:150px" width="54" height="27" viewBox="0 0 64 32"><use href="#asa"/></svg>
+    <svg class="morc" style="right:96px;top:192px" width="32" height="16" viewBox="0 0 64 32"><use href="#asa"/></svg>
+    <svg class="morc" style="right:150px;top:140px" width="22" height="11" viewBox="0 0 64 32"><use href="#asa"/></svg>
+
+    <div class="topo">
+      <div class="logo" style="width:56px;height:56px"></div>
+      <div><div style="font-size:22px;font-weight:900;line-height:1">LV Cakes</div><div style="font-size:12px;color:#B9A3DB;margin-top:2px">bolo de pote</div></div>
+      <div class="pill">Delivery no condomínio</div>
+    </div>
+
+    <div class="sub" style="margin-top:16px;font-size:16px">PROMOÇÃO DE</div>
+    <div class="hw" style="font-size:78px">Halloween</div>
+
+    <div class="ofertas" style="margin-top:12px">
+      <div class="of"><div class="l">Compre 3</div><div class="g">LEVE +1</div></div>
+      <div class="of forte"><div class="l">Compre 6</div><div class="g">LEVE +2</div></div>
+    </div>
+
+    <div class="grade" style="height:190px;margin-top:12px">
+      <div class="foto" style="grid-row:span 2"></div><div class="foto"></div><div class="foto"></div>
+    </div>
+    <div class="mini" style="margin-top:8px">Escolha o pote grátis junto no pedido. Sai grátis o mais barato.</div>
+
+    <div class="rodape">
+      <div class="datas"><b>24 a 27 de outubro</b><br>Sáb a seg · 11h às 22h<br>Ter · 19h às 22h</div>
+      <div class="cta">Peça pelo link</div>
+    </div>
+  </div>
+
+  <!-- ===================== 2. STATUS DO WHATSAPP ===================== -->
+  <div class="titulo">2. Status do WhatsApp</div>
+  <div class="dica">Mesmo jeito: Windows + Shift + S e selecione só o retângulo roxo.</div>
+
+  <div class="arte" id="status">
+    <svg class="morc" style="right:28px;top:150px" width="58" height="29" viewBox="0 0 64 32"><use href="#asa"/></svg>
+    <svg class="morc" style="right:104px;top:186px" width="34" height="17" viewBox="0 0 64 32"><use href="#asa"/></svg>
+    <svg class="morc" style="right:170px;top:146px" width="24" height="12" viewBox="0 0 64 32"><use href="#asa"/></svg>
+
+    <div class="topo">
+      <div class="logo" style="width:58px;height:58px"></div>
+      <div><div style="font-size:22px;font-weight:900;line-height:1">LV Cakes</div><div style="font-size:12px;color:#B9A3DB;margin-top:2px">bolo de pote</div></div>
+    </div>
+
+    <div class="sub" style="margin-top:22px;font-size:18px">PROMOÇÃO DE</div>
+    <div class="hw" style="font-size:84px">Halloween</div>
+
+    <div class="ofertas" style="margin-top:16px">
+      <div class="of"><div class="l">Compre 3</div><div class="g">LEVE +1</div></div>
+      <div class="of forte"><div class="l">Compre 6</div><div class="g">LEVE +2</div></div>
+    </div>
+
+    <div class="grade" style="height:250px;margin-top:14px">
+      <div class="foto" style="grid-row:span 2"></div><div class="foto"></div><div class="foto"></div>
+    </div>
+    <div class="mini" style="margin-top:10px">Escolha o pote grátis junto no pedido. Sai grátis o mais barato.</div>
+
+    <div class="rodape" style="flex-direction:column;align-items:stretch;text-align:center;gap:12px">
+      <div class="datas"><b>24 a 27 de outubro</b><br>Sáb a seg · 11h às 22h · Ter · 19h às 22h</div>
+      <div class="cta" style="font-size:19px;padding:13px">Peça pelo link do grupo</div>
+    </div>
+  </div>
+
+<script>
+  /* ====== CONFIGURAÇÕES: edite aqui ====== */
+  const LOGO = "logo.png";
+  const LOGO_ZOOM = 150;   // aumente se o logo aparecer pequeno no círculo
+
+  // [nome, arquivo, altura do pote na foto em %] — os mesmos ajustes do divulgacao.html
+  const FOTOS = [
+    ["Chocolate",             "chocolate.jpeg", 44],
+    ["Prestígio",             "prestigio.jpeg", 37],
+    ["Cenoura com chocolate", "cenoura.jpeg",   49],
+    ["Ninho com morango",     "morango.jpeg",   47],
+    ["Ninho com Nutella",     "nutella.jpeg",   47]
+  ];
+  // Quais fotos aparecem (0 = Chocolate ... 4 = Nutella): grande, cima, baixo
+  const ARTE = [3, 0, 4];
+  /* ======================================== */
+
+  const $$ = s => [...document.querySelectorAll(s)];
+
+  // Logo
+  $$(".logo").forEach(el => {
+    el.style.backgroundImage = `url("${LOGO}")`;
+    el.style.backgroundSize = LOGO_ZOOM + "% auto";
+    el.style.backgroundPosition = "50% 47%";
+  });
+
+  // Fotos dos bolos
+  $$(".grade").forEach(g => [...g.children].forEach((el, k) => {
+    const [, arq, y] = FOTOS[ARTE[k]];
+    el.style.backgroundImage = `url("${arq}")`;
+    el.style.backgroundSize = (k === 0 ? 210 : 150) + "% auto";
+    el.style.backgroundPosition = `50% ${y}%`;
+  }));
+
+  // Gosma escorrendo no topo de cada arte: [posição, comprimento do pingo]
+  const PINGOS = [[22, 34], [70, 22], [128, 42], [190, 18], [246, 36], [300, 24], [352, 40], [388, 20]];
+  $$(".arte").forEach(a => a.insertAdjacentHTML("afterbegin",
+    `<div class="gosma"><svg viewBox="0 0 400 52" preserveAspectRatio="none"><g fill="#8BFF2E">
+      <path d="M0 0H400V10Q390 16 380 10T360 10T340 10T320 10T300 10T280 10T260 10T240 10T220 10T200 10T180 10T160 10T140 10T120 10T100 10T80 10T60 10T40 10T20 10T0 10Z"/>
+      ${PINGOS.map(([x, h]) => `<rect x="${x}" y="6" width="9" height="${h}" rx="4.5"/><circle cx="${x + 4.5}" cy="${h + 8}" r="3.5"/>`).join("")}
+    </g></svg></div>`));
+</script>
+</body>
+</html>

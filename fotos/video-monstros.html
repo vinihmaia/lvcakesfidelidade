@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LV Cakes | Vídeo dos monstros</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Creepster&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#1A1420;font-family:'Nunito',sans-serif;color:#EADCFF;display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px 12px 60px}
+  .dica{font-size:13px;color:#B9A3DB;max-width:460px;text-align:center;line-height:1.5}
+  .botoes{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  button{font:inherit;font-weight:900;font-size:15px;border:none;border-radius:14px;padding:12px 20px;cursor:pointer;background:#FF7518;color:#120A1C}
+  button.sec{background:#2E1F47;color:#EADCFF}
+
+  #st{width:450px;height:800px;position:relative;overflow:hidden;border-radius:22px;background:radial-gradient(circle at 50% 40%,#2E1F47 0%,#120A1C 65%)}
+  .cena{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:70px 30px 40px;box-sizing:border-box;opacity:0;transition:opacity .35s;overflow:hidden}
+  .cena.on{opacity:1}
+  .txt{font-size:30px;font-weight:900;line-height:1.15;position:relative;z-index:3}
+  .hw{font-family:'Creepster',cursive;color:#FF7518;line-height:.95;letter-spacing:.02em;position:relative;z-index:3}
+
+  /* gosma fixa no topo */
+  .gosma{position:absolute;top:0;left:0;right:0;height:60px;z-index:8;pointer-events:none}
+  .gosma svg{display:block;width:100%;height:100%}
+  .pingo{transform-box:fill-box;transform-origin:top;animation:pinga 2.4s ease-in-out infinite}
+  @keyframes pinga{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1)}}
+
+  /* monstro aparecendo com "pulo" */
+  .pop{opacity:0}
+  .cena.on .pop{animation:pop .6s cubic-bezier(.34,1.56,.64,1) both}
+  @keyframes pop{from{opacity:0;transform:scale(0) translateY(60px)}to{opacity:1;transform:none}}
+
+  /* monstro pulando sem parar */
+  .pula{display:block;animation:pula .55s ease-in-out infinite alternate}
+  @keyframes pula{to{transform:translateY(-12px)}}
+
+  /* monstro espiando pela beirada */
+  .espia{position:absolute;bottom:0;transform:translateY(100%)}
+  .cena.on .espia{animation:espia 1s ease-out both}
+  @keyframes espia{from{transform:translateY(100%)}to{transform:translateY(42%)}}
+
+  /* balão de fala */
+  .balao{background:#EADCFF;color:#120A1C;border-radius:26px;padding:14px 24px;font-weight:900;position:relative;z-index:4}
+  .balao::after{content:"";position:absolute;bottom:-16px;left:50%;margin-left:-12px;border-style:solid;border-width:16px 12px 0;border-color:#EADCFF transparent transparent}
+  .balao .a{font-size:26px}
+  .balao .b{font-family:'Creepster',cursive;font-size:48px;color:#FF7518;line-height:1}
+
+  /* foto do bolo */
+  .foto{border-radius:28px;background-color:#2E1F47;background-repeat:no-repeat;border:4px solid #8BFF2E;box-shadow:0 0 40px rgba(139,255,46,.35)}
+  .cena.on .zoom{animation:zoom 3.2s ease-out both}
+  @keyframes zoom{from{transform:scale(.85) rotate(-4deg)}to{transform:scale(1) rotate(0)}}
+
+  .logo{border-radius:50%;background-color:#FFFBF4;background-repeat:no-repeat;border:4px solid #8BFF2E;flex:none}
+  .cta{display:inline-block;background:#FF7518;color:#120A1C;font-weight:900;font-size:22px;padding:12px 26px;border-radius:999px}
+</style>
+</head>
+<body>
+
+  <div class="dica">Para gravar: abra a Ferramenta de Captura no modo de <b>vídeo</b>, selecione só o retângulo roxo, comece a gravar e clique em um dos botões.</div>
+
+  <svg width="0" height="0" style="position:absolute"><defs>
+    <!-- Gosmento: bolha verde de um olho -->
+    <symbol id="m-gosma" viewBox="0 0 120 120">
+      <path fill="#8BFF2E" d="M20 112Q8 62 30 36Q60 6 90 36Q112 62 100 112Q92 102 84 112Q76 100 68 112Q60 102 52 112Q44 100 36 112Q28 102 20 112Z"/>
+      <circle cx="60" cy="54" r="19" fill="#fff"/><circle cx="63" cy="57" r="9" fill="#120A1C"/><circle cx="66" cy="53" r="3" fill="#fff"/>
+      <path fill="#120A1C" d="M40 80Q60 98 80 80Q60 88 40 80Z"/>
+      <path fill="#fff" d="M50 84l4 6 3-5zM64 85l3 5 4-6z"/>
+    </symbol>
+    <!-- Abóbora -->
+    <symbol id="m-abobora" viewBox="0 0 120 120">
+      <path fill="#3B7A1A" d="M56 16q4-10 14-8-6 6-6 16h-8z"/>
+      <ellipse cx="60" cy="70" rx="50" ry="42" fill="#FF7518"/>
+      <ellipse cx="60" cy="70" rx="22" ry="42" fill="none" stroke="#E05A00" stroke-width="3"/>
+      <ellipse cx="60" cy="70" rx="38" ry="42" fill="none" stroke="#E05A00" stroke-width="2"/>
+      <path fill="#FFD23F" d="M34 62l10-16 10 16zM66 62l10-16 10 16z"/>
+      <path fill="#FFD23F" d="M30 78l8 8 8-7 8 8 6-7 6 7 8-8 8 7 8-8q-4 22-30 24-26-2-30-24z"/>
+    </symbol>
+    <!-- Fantasminha -->
+    <symbol id="m-fantasma" viewBox="0 0 120 120">
+      <path fill="#EADCFF" d="M60 6C32 6 18 28 18 54V114L30 104L42 116L54 104L66 116L78 104L90 116L102 106V54C102 28 88 6 60 6Z"/>
+      <ellipse cx="46" cy="50" rx="7" ry="10" fill="#120A1C"/><ellipse cx="74" cy="50" rx="7" ry="10" fill="#120A1C"/>
+      <ellipse cx="60" cy="74" rx="8" ry="11" fill="#120A1C"/>
+      <ellipse cx="36" cy="64" rx="6" ry="3.5" fill="#FF9EC4"/><ellipse cx="84" cy="64" rx="6" ry="3.5" fill="#FF9EC4"/>
+    </symbol>
+    <!-- Chifrudo: monstrinho roxo -->
+    <symbol id="m-chifre" viewBox="0 0 120 120">
+      <path fill="#EADCFF" d="M30 40L22 10L46 30zM90 40L98 10L74 30z"/>
+      <circle cx="60" cy="68" r="44" fill="#A35CFF"/>
+      <circle cx="44" cy="60" r="10" fill="#fff"/><circle cx="76" cy="60" r="10" fill="#fff"/>
+      <circle cx="46" cy="62" r="4.5" fill="#120A1C"/><circle cx="74" cy="62" r="4.5" fill="#120A1C"/>
+      <path fill="#120A1C" d="M38 82Q60 104 82 82Z"/>
+      <path fill="#fff" d="M47 83l4 9 4-8zM65 84l4 8 4-9z"/>
+    </symbol>
+  </defs></svg>
+
+  <div id="st">
+
+    <!-- 1. Espiando -->
+    <div class="cena">
+      <div class="hw" style="font-size:110px">Psiu...</div>
+      <div class="txt" style="margin-top:16px">os monstros têm<br>um recado</div>
+      <div class="espia" style="left:-6px;animation-delay:.2s"><svg width="150" height="150"><use href="#m-chifre"/></svg></div>
+      <div class="espia" style="left:150px;animation-delay:.6s"><svg width="150" height="150"><use href="#m-gosma"/></svg></div>
+      <div class="espia" style="right:-6px;animation-delay:1s"><svg width="150" height="150"><use href="#m-fantasma"/></svg></div>
+    </div>
+
+    <!-- 2. Gosmento: compre 3 -->
+    <div class="cena">
+      <div class="balao pop" style="animation-delay:.5s"><div class="a">Compre 3</div><div class="b">LEVE +1 GRÁTIS!</div></div>
+      <div class="pop" style="margin-top:34px"><svg class="pula" width="280" height="280"><use href="#m-gosma"/></svg></div>
+    </div>
+
+    <!-- 3. Abóbora e Fantasminha: compre 6 -->
+    <div class="cena">
+      <div class="balao pop" style="animation-delay:.7s"><div class="a">Compre 6</div><div class="b">LEVE +2 GRÁTIS!</div></div>
+      <div style="display:flex;gap:10px;margin-top:34px">
+        <div class="pop"><svg class="pula" width="190" height="190"><use href="#m-abobora"/></svg></div>
+        <div class="pop" style="animation-delay:.3s"><svg class="pula" width="190" height="190" style="animation-delay:.25s"><use href="#m-fantasma"/></svg></div>
+      </div>
+    </div>
+
+    <!-- 4. Todos em volta do bolo -->
+    <div class="cena">
+      <div class="txt">Eles só querem</div>
+      <div class="hw" style="font-size:66px;margin-bottom:14px">BOLO DE POTE</div>
+      <div style="position:relative;width:340px;height:340px">
+        <div class="foto zoom" id="v-bolo" style="position:absolute;left:40px;top:40px;width:260px;height:260px"></div>
+        <div class="pop" style="position:absolute;left:-14px;top:-14px;animation-delay:.2s"><svg class="pula" width="110" height="110"><use href="#m-abobora"/></svg></div>
+        <div class="pop" style="position:absolute;right:-14px;top:-14px;animation-delay:.4s"><svg class="pula" width="110" height="110" style="animation-delay:.2s"><use href="#m-fantasma"/></svg></div>
+        <div class="pop" style="position:absolute;left:-14px;bottom:-14px;animation-delay:.6s"><svg class="pula" width="110" height="110" style="animation-delay:.1s"><use href="#m-chifre"/></svg></div>
+        <div class="pop" style="position:absolute;right:-14px;bottom:-14px;animation-delay:.8s"><svg class="pula" width="110" height="110" style="animation-delay:.3s"><use href="#m-gosma"/></svg></div>
+      </div>
+    </div>
+
+    <!-- 5. Final -->
+    <div class="cena" style="justify-content:flex-start;padding-top:90px">
+      <div class="logo pop" id="logo" style="width:140px;height:140px"></div>
+      <div class="hw" style="font-size:64px;margin-top:16px">Halloween</div>
+      <div class="txt" style="font-size:26px;margin-top:6px">24 a 27 de outubro</div>
+      <div style="font-size:15px;color:#B9A3DB;margin-top:4px;font-weight:700">Sáb a seg · 11h às 22h · Ter · 19h às 22h</div>
+      <div class="cta pop" style="margin-top:20px;animation-delay:.5s">Peça pelo link do grupo</div>
+      <div style="position:absolute;left:0;right:0;bottom:-6px;display:flex;justify-content:center;gap:2px">
+        <div class="pop" style="animation-delay:.8s"><svg class="pula" width="104" height="104"><use href="#m-chifre"/></svg></div>
+        <div class="pop" style="animation-delay:1s"><svg class="pula" width="104" height="104" style="animation-delay:.15s"><use href="#m-abobora"/></svg></div>
+        <div class="pop" style="animation-delay:1.2s"><svg class="pula" width="104" height="104" style="animation-delay:.3s"><use href="#m-gosma"/></svg></div>
+        <div class="pop" style="animation-delay:1.4s"><svg class="pula" width="104" height="104" style="animation-delay:.45s"><use href="#m-fantasma"/></svg></div>
+      </div>
+    </div>
+
+    <div class="gosma" id="gosma"></div>
+  </div>
+
+  <div class="botoes">
+    <button id="com-som">▶ Assistir com som</button>
+    <button id="sem-som" class="sec">▶ Assistir sem som</button>
+    <button id="parar" class="sec">■ Parar</button>
+  </div>
+
+<script>
+  /* ====== CONFIGURAÇÕES: edite aqui ====== */
+  const LOGO = "logo.png";
+  const LOGO_ZOOM = 150;
+  // Foto do bolo da cena 4: [arquivo, altura do pote na foto em %]
+  const FOTO_BOLO = ["morango.jpeg", 47];
+  // Duração de cada cena, em milissegundos (1000 = 1 segundo)
+  const DURS = [2800, 3000, 3200, 3400, 4200];
+  /* ======================================== */
+
+  const $ = id => document.getElementById(id);
+  const cenas = [...document.querySelectorAll("#st .cena")];
+
+  // Foto e logo
+  $("v-bolo").style.backgroundImage = `url("${FOTO_BOLO[0]}")`;
+  $("v-bolo").style.backgroundSize = "170% auto";
+  $("v-bolo").style.backgroundPosition = `50% ${FOTO_BOLO[1]}%`;
+  $("logo").style.backgroundImage = `url("${LOGO}")`;
+  $("logo").style.backgroundSize = LOGO_ZOOM + "% auto";
+  $("logo").style.backgroundPosition = "50% 47%";
+
+  // Gosma no topo
+  const PINGOS = [[22, 34, 0], [70, 22, .6], [128, 44, 1.2], [190, 18, .3], [246, 38, .9], [300, 24, 1.5], [352, 42, .4], [388, 20, 1.1]];
+  $("gosma").innerHTML = `<svg viewBox="0 0 400 60" preserveAspectRatio="none"><g fill="#8BFF2E">
+    <path d="M0 0H400V10Q390 16 380 10T360 10T340 10T320 10T300 10T280 10T260 10T240 10T220 10T200 10T180 10T160 10T140 10T120 10T100 10T80 10T60 10T40 10T20 10T0 10Z"/>
+    ${PINGOS.map(([x, h, d]) => `<rect class="pingo" x="${x}" y="6" width="9" height="${h}" rx="4.5" style="animation-delay:${d}s"/>`).join("")}
+  </g></svg>`;
+
+  /* ---------- Som (feito pela própria página) ---------- */
+  let som = null;
+  function iniciarSom(){
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const mestre = ac.createGain(); mestre.gain.value = .7; mestre.connect(ac.destination);
+    return {
+      // "pop" de bolha quando um monstro aparece
+      pop(){
+        const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+        o.type = "sine"; o.frequency.setValueAtTime(260, t); o.frequency.exponentialRampToValueAtTime(900, t + .12);
+        g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.35, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + .18);
+        o.connect(g); g.connect(mestre); o.start(t); o.stop(t + .2);
+      },
+      // "uuuuu" de fantasma
+      uuu(){
+        const t = ac.currentTime, o = ac.createOscillator(), lfo = ac.createOscillator(), prof = ac.createGain(), g = ac.createGain();
+        o.type = "sine"; o.frequency.setValueAtTime(330, t); o.frequency.linearRampToValueAtTime(520, t + 1); o.frequency.linearRampToValueAtTime(300, t + 2);
+        lfo.frequency.value = 6; prof.gain.value = 18; lfo.connect(prof); prof.connect(o.frequency);
+        g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.25, t + .3); g.gain.exponentialRampToValueAtTime(.0001, t + 2.2);
+        o.connect(g); g.connect(mestre); o.start(t); lfo.start(t); o.stop(t + 2.3); lfo.stop(t + 2.3);
+      },
+      fim(){ setTimeout(() => ac.close(), 600); }
+    };
+  }
+
+  /* ---------- Tocar o vídeo ---------- */
+  let tm = [];
+  function parar(){
+    tm.forEach(clearTimeout); tm = [];
+    if (som) { som.fim(); som = null; }
+    cenas.forEach(c => c.classList.remove("on"));
+  }
+  function play(comSom){
+    parar();
+    if (comSom) som = iniciarSom();
+    let t = 0;
+    cenas.forEach((c, i) => {
+      tm.push(setTimeout(() => {
+        cenas.forEach(x => x.classList.remove("on"));
+        void c.offsetWidth;
+        c.classList.add("on");
+        if (!som) return;
+        if (i === 0) som.uuu();
+        // um "pop" para cada monstro, balão ou botão que aparece
+        c.querySelectorAll(".pop, .espia").forEach(el => {
+          const atraso = parseFloat(el.style.animationDelay) || 0;
+          tm.push(setTimeout(() => som && som.pop(), atraso * 1000 + 80));
+        });
+      }, t + 60));
+      t += DURS[i];
+    });
+    tm.push(setTimeout(() => { if (som) { som.fim(); som = null; } }, t + 400));
+  }
+  $("com-som").onclick = () => play(true);
+  $("sem-som").onclick = () => play(false);
+  $("parar").onclick = parar;
+
+  cenas[0].classList.add("on");   // primeira cena parada, para você enquadrar
+</script>
+</body>
+</html>

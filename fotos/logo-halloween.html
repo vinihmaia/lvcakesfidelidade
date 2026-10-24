@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LV Cakes | Logo de Halloween</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Creepster&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#2A2333;font-family:'Nunito',sans-serif;color:#EADCFF;display:flex;flex-direction:column;align-items:center;gap:18px;padding:28px 12px 60px}
+  .titulo{font-size:16px;font-weight:800;margin-top:14px}
+  .dica{font-size:13px;color:#B9A3DB;max-width:540px;text-align:center;line-height:1.5}
+
+  .arte{position:relative;overflow:hidden;border-radius:22px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;text-align:center;
+        background:radial-gradient(circle at 50% 38%,#2E1F47 0%,#120A1C 60%)}
+  #post{width:540px;height:675px;padding:70px 32px 28px}
+  #status{width:450px;height:800px;padding:96px 28px 40px}
+
+  .gosma{position:absolute;top:0;left:0;right:0;height:56px;z-index:6}
+  .gosma svg{display:block;width:100%;height:100%}
+  .morc{position:absolute;fill:#B9A3DB;opacity:.7;z-index:1}
+  .estrela{position:absolute;width:3px;height:3px;border-radius:50%;background:#EADCFF;opacity:.6}
+
+  /* logo com lua e chapéu */
+  .palco{position:relative;width:310px;height:300px;flex:none;z-index:2}
+  .lua{position:absolute;width:250px;height:250px;border-radius:50%;background:#FF7518;right:0;top:0;box-shadow:0 0 90px 14px rgba(255,117,24,.35)}
+  .logo{position:absolute;width:236px;height:236px;left:14px;bottom:0;border-radius:50%;background-color:#FFFBF4;background-repeat:no-repeat;
+        border:4px solid #8BFF2E;box-shadow:0 0 40px 6px rgba(139,255,46,.45)}
+  .chapeu{position:absolute;width:150px;left:4px;top:-34px;transform:rotate(-16deg);z-index:3}
+
+  .sub{color:#8BFF2E;font-weight:900;letter-spacing:.12em;position:relative;z-index:3}
+  .hw{font-family:'Creepster',cursive;color:#FF7518;line-height:.95;letter-spacing:.02em;position:relative;z-index:3}
+
+  .ofertas{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;position:relative;z-index:3}
+  .of{border-radius:16px;padding:10px 12px;border:2px solid #A35CFF;background:#24163A}
+  .of.forte{background:#8BFF2E;border-color:#8BFF2E;color:#120A1C}
+  .of .l{font-size:16px;font-weight:700}
+  .of .g{font-size:28px;font-weight:900;line-height:1.05}
+
+  .rodape{margin-top:auto;position:relative;z-index:3}
+  .datas{font-size:17px;font-weight:900}
+  .horas{font-size:13px;color:#B9A3DB;margin-top:2px}
+  .cta{display:inline-block;margin-top:12px;background:#FF7518;color:#120A1C;font-weight:900;font-size:17px;padding:10px 22px;border-radius:999px}
+</style>
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute"><defs>
+    <path id="asa" d="M32 12C30 8 28 6 27 4L29 9C24 7 18 6 12 8C10 12 6 14 0 14C6 16 9 20 10 26C14 22 20 21 24 24C26 22 29 21 32 24C35 21 38 22 40 24C44 21 50 22 54 26C55 20 58 16 64 14C58 14 54 12 52 8C46 6 40 7 35 9L37 4C36 6 34 8 32 12Z"/>
+    <g id="chapeu">
+      <path d="M30 80Q50 46 56 8Q64 0 72 10Q78 46 96 80Z" fill="#24163A" stroke="#A35CFF" stroke-width="3"/>
+      <path d="M38 66Q63 72 88 66L92 76Q63 82 34 76Z" fill="#8BFF2E"/>
+      <ellipse cx="63" cy="82" rx="60" ry="11" fill="#1E1430" stroke="#A35CFF" stroke-width="3"/>
+    </g>
+  </defs></svg>
+
+  <!-- ===================== 1. POST ===================== -->
+  <div class="titulo">1. Post para o grupo</div>
+  <div class="dica">Windows + Shift + S e selecione só o retângulo roxo.</div>
+
+  <div class="arte" id="post">
+    <svg class="morc" style="left:34px;top:120px" width="50" height="25" viewBox="0 0 64 32"><use href="#asa"/></svg>
+    <svg class="morc" style="left:82px;top:176px" width="28" height="14" viewBox="0 0 64 32"><use href="#asa"/></svg>
+    <svg class="morc" style="right:30px;top:290px" width="44" height="22" viewBox="0 0 64 32"><use href="#asa"/></svg>
+    <svg class="morc" style="right:76px;top:340px" width="24" height="12" viewBox="0 0 64 32"><use href="#asa"/></svg>
+
+    <div class="palco">
+      <div class="lua"></div>
+      <div class="logo"></div>
+      <svg class="chapeu" viewBox="0 0 126 96"><use href="#chapeu"/></svg>
+    </div>
+
+    <div class="sub" style="margin-top:14px;font-size:16px">PROMOÇÃO DE</div>
+    <div class="hw" style="font-size:74px">Halloween</div>
+
+    <div class="ofertas" style="margin-top:12px">
+      <div class="of"><div class="l">Compre 3</div><div class="g">LEVE +1</div></div>
+      <div class="of forte"><div class="l">Compre 6</div><div class="g">LEVE +2</div></div>
+    </div>
+
+    <div class="rodape">
+      <div class="datas">24 a 27 de outubro</div>
+      <div class="horas">Sáb a seg · 11h às 22h · Ter · 19h às 22h</div>
+    </div>
+  </div>
+
+  <!-- ===================== 2. STATUS ===================== -->
+  <div class="titulo">2. Status do WhatsApp</div>
+  <div class="dica">Mesmo jeito: Windows + Shift + S e selecione só o retângulo roxo.</div>
+
+  <div class="arte" id="status">
+    <svg class="morc" style="left:26px;top:140px" width="54" height="27" viewBox="0 0 64 32"><use href="#asa"/></svg>
+    <svg class="morc" style="left:78px;top:200px" width="30" height="15" viewBox="0 0 64 32"><use href="#asa"/></svg>
+    <svg class="morc" style="right:22px;top:330px" width="46" height="23" viewBox="0 0 64 32"><use href="#asa"/></svg>
+    <svg class="morc" style="right:70px;top:384px" width="26" height="13" viewBox="0 0 64 32"><use href="#asa"/></svg>
+
+    <div class="palco">
+      <div class="lua"></div>
+      <div class="logo"></div>
+      <svg class="chapeu" viewBox="0 0 126 96"><use href="#chapeu"/></svg>
+    </div>
+
+    <div class="sub" style="margin-top:22px;font-size:18px">PROMOÇÃO DE</div>
+    <div class="hw" style="font-size:84px">Halloween</div>
+
+    <div class="ofertas" style="margin-top:18px">
+      <div class="of"><div class="l">Compre 3</div><div class="g">LEVE +1</div></div>
+      <div class="of forte"><div class="l">Compre 6</div><div class="g">LEVE +2</div></div>
+    </div>
+
+    <div class="rodape">
+      <div class="datas" style="font-size:20px">24 a 27 de outubro</div>
+      <div class="horas" style="font-size:14px">Sáb a seg · 11h às 22h<br>Ter · 19h às 22h</div>
+      <div class="cta">Peça pelo link do grupo</div>
+    </div>
+  </div>
+
+<script>
+  /* ====== CONFIGURAÇÕES: edite aqui ====== */
+  const LOGO = "logo.png";
+  const LOGO_ZOOM = 150;   // aumente se o selo aparecer pequeno no círculo; use 100 se o arquivo já for só o selo
+  /* ======================================== */
+
+  const $$ = s => [...document.querySelectorAll(s)];
+
+  // Logo
+  $$(".logo").forEach(el => {
+    el.style.backgroundImage = `url("${LOGO}")`;
+    el.style.backgroundSize = LOGO_ZOOM + "% auto";
+    el.style.backgroundPosition = "50% 47%";
+  });
+
+  // Estrelinhas no céu (sempre nos mesmos lugares)
+  const ESTRELAS = [[8,18],[22,9],[40,14],[62,7],[78,16],[90,10],[14,32],[86,30],[52,22],[70,26]];
+  $$(".arte").forEach(a => ESTRELAS.forEach(([x, y]) =>
+    a.insertAdjacentHTML("afterbegin", `<span class="estrela" style="left:${x}%;top:${y}%"></span>`)));
+
+  // Gosma no topo
+  const PINGOS = [[22, 34], [70, 22], [128, 42], [190, 18], [246, 36], [300, 24], [352, 40], [388, 20]];
+  $$(".arte").forEach(a => a.insertAdjacentHTML("afterbegin",
+    `<div class="gosma"><svg viewBox="0 0 400 56" preserveAspectRatio="none"><g fill="#8BFF2E">
+      <path d="M0 0H400V10Q390 16 380 10T360 10T340 10T320 10T300 10T280 10T260 10T240 10T220 10T200 10T180 10T160 10T140 10T120 10T100 10T80 10T60 10T40 10T20 10T0 10Z"/>
+      ${PINGOS.map(([x, h]) => `<rect x="${x}" y="6" width="9" height="${h}" rx="4.5"/><circle cx="${x + 4.5}" cy="${h + 8}" r="3.5"/>`).join("")}
+    </g></svg></div>`));
+</script>
+</body>
+</html>
