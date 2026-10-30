@@ -119,7 +119,7 @@
   #lv.halloween .chip.on,#lv.halloween .blc button.on,#lv.halloween .pay.on{background:#8BFF2E;border-color:#8BFF2E;color:#120A1C}
   #lv.halloween .aviso,#lv.halloween #usar-brinde{color:#EADCFF}
   #lv.halloween #usar-brinde.on{background:#8BFF2E;color:#120A1C}
-    #lv.halloween #repetir{color:#EADCFF}
+  #lv.halloween #repetir{color:#EADCFF}
   #lv.halloween .err{color:#FF8A8A}
   #lv.halloween .selo-sab{background:#8BFF2E;color:#120A1C}
   #lv.halloween section[aria-labelledby="cartao-titulo"]{border:1.5px solid #A35CFF}
@@ -127,7 +127,7 @@
   #lv.halloween #copiar{color:#EADCFF !important}
   #lv.halloween footer a[href*="vitrapi"]{color:#EADCFF !important}
 
-    /* ESGOTADO de terror: fita de interdição atravessando a foto */
+  /* ESGOTADO de terror: fita de interdição atravessando a foto */
   #lv.halloween .card.esgotado .foto{overflow:hidden;border-radius:16px}
   #lv.halloween .card.esgotado .ph{filter:grayscale(1) brightness(.55) sepia(.4) hue-rotate(230deg)}
   #lv.halloween .card.esgotado .selo-sab{display:none}
@@ -141,7 +141,7 @@
   #lv.halloween .esg i{font-size:22px}
   #lv.halloween .esg span{animation:lv-falha 2.4s steps(1) infinite}
   @keyframes lv-falha{0%,40%,44%,72%,76%,100%{opacity:1}42%,74%{opacity:.25}}
-  @media (prefers-reduced-motion:reduce){#lv.halloween .esg span{animation:none}}
+
   /* combos no Halloween: título verde pulsando, cartões roxos */
   #lv.halloween .combos-tit{display:inline-flex;background:#8BFF2E;color:#120A1C;padding:8px 14px;border-radius:999px;animation:lv-pulsa 1.8s ease-in-out infinite}
   #lv.halloween .combo{background:#24163A;border-color:#A35CFF}
@@ -163,7 +163,7 @@
   @keyframes lv-bate{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.45)}}
 
   /* quem pediu "menos movimento" no celular não vê animações */
-  @media (prefers-reduced-motion:reduce){.morcegos{display:none}#lv.halloween .combos-tit,#lv .pingo{animation:none}}
+  @media (prefers-reduced-motion:reduce){.morcegos{display:none}#lv.halloween .combos-tit,#lv .pingo,#lv.halloween .esg span{animation:none}}
 </style>
 </head>
 <body>
@@ -311,11 +311,14 @@
   // COMBOS: o cliente escolhe os sabores que quiser (pode repetir) e o desconto entra sozinho.
   // opcoes: [quantos potes, preço do combo]. O site monta a combinação mais barata
   // (ex.: 5 potes = 2 combos de 2 + 1 avulso). Os potes mais caros entram no combo.
-  // ⚠️ Os números precisam ser iguais aos que o banco calcula (função no Supabase).
+  // ⚠️ Os números precisam ser iguais ao v_combos da função calcular_promocao no banco.
   // Para desligar: const COMBOS = null;
   const COMBOS = {
     opcoes: [[2, 20], [3, 35]]
   };
+
+  // Carimbo em dobro: datas iguais às da função peso_carimbo do banco
+  const DOBRO = ["2026-10-30"];
 
   // Tema de Halloween: liga sozinho entre as datas abaixo.
   // Para ver antes, abra o site com ?tema=halloween no fim do endereço.
@@ -336,7 +339,7 @@
   const brl = v => v.toLocaleString("pt-BR", {style:"currency", currency:"BRL", minimumFractionDigits: v % 1 ? 2 : 0});
   $("chave").textContent = CHAVE;
 
-  /* ---------- Datas (tema) ---------- */
+  /* ---------- Datas (tema e carimbo em dobro) ---------- */
   const hojeISO = () => {
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -451,7 +454,7 @@
       txt = `Você tem ${b} pote${b > 1 ? "s" : ""} grátis. Use no pedido abaixo.`;
     } else {
       const f = 5 - c;
-      txt = `Mais ${f} compra${f > 1 ? "s" : ""} e o próximo pote é por nossa conta.`;
+      txt = `Mais ${f} carimbo${f > 1 ? "s" : ""} e o próximo pote é por nossa conta.`;
     }
     $("cartao-status").textContent = txt;
     $("anel").setAttribute("aria-label", cartao
@@ -604,10 +607,9 @@
   const soma = l => l.reduce((s, x) => s + x, 0);
 
   // Acha o jeito mais barato de montar combos com uma lista de preços.
-  // Funciona como "montar a conta de trás pra frente": para cada quantidade de potes,
-  // guarda o menor preço possível e reaproveita esse resultado na próxima.
+  // Monta a conta 1 pote por vez (do mais caro para o mais barato) e guarda o menor preço.
   function melhorPreco(precos){
-    const p = precos.slice().sort((a, b) => b - a);   // mais caros primeiro: eles entram no combo
+    const p = precos.slice().sort((a, b) => b - a);
     const melhor = [{ custo: 0, combos: [] }];
     for (let k = 1; k <= p.length; k++) {
       let m = { custo: melhor[k - 1].custo + p[k - 1], combos: melhor[k - 1].combos };
@@ -873,13 +875,14 @@
     if (meta) meta.content = "#120A1C";   // pinta a barra do navegador no celular
     $("combos-tit-txt").textContent = "🎃 Combos assombrados";
 
-    // Selo "Assombrado" em todos os bolos
+    // Selo "Assombrado" e faixa de ESGOTADO com caveiras em todos os bolos
     cards.forEach(card => {
       let s = card.querySelector(".selo-sab");
       if (!s) { s = document.createElement("span"); s.className = "selo-sab"; card.querySelector(".foto").appendChild(s); }
       s.textContent = TEMA.selo;
-    });
       card.querySelector(".esg").innerHTML = '<i class="ti ti-skull" aria-hidden="true"></i><span>Esgotado</span><i class="ti ti-skull" aria-hidden="true"></i>';
+    });
+
     // Gosma escorrendo do topo: [posição, comprimento do pingo, atraso]
     const pingos = [[30, 30, 0], [95, 22, .8], [150, 38, 1.6], [215, 18, .4], [270, 34, 1.2], [340, 26, 2], [380, 20, .6]];
     const g = document.createElement("div");
@@ -899,8 +902,10 @@
     document.body.appendChild(m);
   }
 
+  /* ---------- Começo ---------- */
   montarCombos();
   if (temaAtivo()) ligarTema();
+  if (DOBRO.includes(hojeISO())) $("cartao-titulo").textContent = "🎃 Hoje: carimbo em dobro! Cada pedido vale 2";
 
   saudar();
   avisoHorario();
