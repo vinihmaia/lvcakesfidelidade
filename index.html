@@ -19,7 +19,7 @@
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Cormorant+Garamond:ital,wght@1,500&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Cormorant+Garamond:ital,wght@1,500&family=JetBrains+Mono:wght@700&family=Creepster&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" rel="stylesheet">
 <style>
   html,body{margin:0;background:#FFF4EA}
@@ -119,6 +119,7 @@
   #lv.halloween .chip.on,#lv.halloween .blc button.on,#lv.halloween .pay.on{background:#8BFF2E;border-color:#8BFF2E;color:#120A1C}
   #lv.halloween .aviso,#lv.halloween #usar-brinde{color:#EADCFF}
   #lv.halloween #usar-brinde.on{background:#8BFF2E;color:#120A1C}
+    #lv.halloween #repetir{color:#EADCFF}
   #lv.halloween .err{color:#FF8A8A}
   #lv.halloween .selo-sab{background:#8BFF2E;color:#120A1C}
   #lv.halloween section[aria-labelledby="cartao-titulo"]{border:1.5px solid #A35CFF}
@@ -126,6 +127,21 @@
   #lv.halloween #copiar{color:#EADCFF !important}
   #lv.halloween footer a[href*="vitrapi"]{color:#EADCFF !important}
 
+    /* ESGOTADO de terror: fita de interdição atravessando a foto */
+  #lv.halloween .card.esgotado .foto{overflow:hidden;border-radius:16px}
+  #lv.halloween .card.esgotado .ph{filter:grayscale(1) brightness(.55) sepia(.4) hue-rotate(230deg)}
+  #lv.halloween .card.esgotado .selo-sab{display:none}
+  #lv.halloween .card.esgotado .esg{display:flex}
+  #lv.halloween .esg{left:-15%;right:-15%;top:50%;bottom:auto;transform:translateY(-50%) rotate(-14deg);
+    align-items:center;justify-content:center;gap:10px;padding:12px 0 10px;border-radius:0;
+    background:repeating-linear-gradient(-45deg,#120A1C 0 9px,#FF7518 9px 18px) top/100% 5px no-repeat,
+               repeating-linear-gradient(-45deg,#120A1C 0 9px,#FF7518 9px 18px) bottom/100% 5px no-repeat,#FF7518;
+    color:#120A1C;font-family:'Creepster',cursive;font-size:26px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;
+    box-shadow:0 8px 22px rgba(0,0,0,.7),0 0 18px rgba(255,117,24,.45)}
+  #lv.halloween .esg i{font-size:22px}
+  #lv.halloween .esg span{animation:lv-falha 2.4s steps(1) infinite}
+  @keyframes lv-falha{0%,40%,44%,72%,76%,100%{opacity:1}42%,74%{opacity:.25}}
+  @media (prefers-reduced-motion:reduce){#lv.halloween .esg span{animation:none}}
   /* combos no Halloween: título verde pulsando, cartões roxos */
   #lv.halloween .combos-tit{display:inline-flex;background:#8BFF2E;color:#120A1C;padding:8px 14px;border-radius:999px;animation:lv-pulsa 1.8s ease-in-out infinite}
   #lv.halloween .combo{background:#24163A;border-color:#A35CFF}
@@ -863,7 +879,7 @@
       if (!s) { s = document.createElement("span"); s.className = "selo-sab"; card.querySelector(".foto").appendChild(s); }
       s.textContent = TEMA.selo;
     });
-
+      card.querySelector(".esg").innerHTML = '<i class="ti ti-skull" aria-hidden="true"></i><span>Esgotado</span><i class="ti ti-skull" aria-hidden="true"></i>';
     // Gosma escorrendo do topo: [posição, comprimento do pingo, atraso]
     const pingos = [[30, 30, 0], [95, 22, .8], [150, 38, 1.6], [215, 18, .4], [270, 34, 1.2], [340, 26, 2], [380, 20, .6]];
     const g = document.createElement("div");
