@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>LV CAKES | Bolo de pote</title>
-<meta name="description" content="Peça seu bolo de pote LV Cakes e receba no seu bloco. Novidade: cartão fidelidade.">
+<meta name="description" content="Peça seu bolo de pote LV Cakes e receba no seu bloco. Combo: 2 potes por R$ 20.">
 
 <!-- PRÉVIA DO LINK NO WHATSAPP -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="LV Cakes">
 <meta property="og:title" content="LV Cakes | Bolo de pote entregue no seu bloco">
-<meta property="og:description" content="Chocolate, Prestígio, Cenoura, Ninho com morango e Ninho com Nutella. A partir de R$ 15. Cartão fidelidade: compre 5 vezes e ganhe 1 pote.">
+<meta property="og:description" content="Combo: 2 potes por R$ 20! Chocolate, Prestígio, Cenoura, Ninho com morango e Ninho com Nutella. Cartão fidelidade: compre 5 vezes e ganhe 1 pote.">
 <meta property="og:image" content="https://lvcakes.vitrapi.com/morango.jpeg">
 <meta property="og:url" content="https://lvcakes.vitrapi.com/">
 
@@ -36,9 +36,20 @@
   #lv .aviso{margin-top:18px;background:var(--peach);color:var(--choc);border-radius:16px;padding:12px 14px;font-size:14px;line-height:1.4;gap:10px;align-items:flex-start}
   #lv .aviso i{font-size:20px;flex:none}
 
-  /* faixa da promoção */
-  #lv .promo{margin-top:12px;background:var(--acc);color:#fff;border-radius:16px;padding:12px 14px;font-size:15px;font-weight:800;display:flex;align-items:center;gap:10px}
-  #lv .promo i{font-size:22px;flex:none}
+  /* COMBOS (no topo) */
+  #lv .combos{margin-top:20px}
+  #lv .combos-tit{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;color:var(--acc)}
+  #lv .combos-tit i{font-size:20px}
+  #lv .combos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:10px}
+  #lv .combo{display:flex;flex-direction:column;gap:2px;background:#fff;color:var(--ink);border:2px solid var(--peach2);border-radius:20px;padding:14px;transition:border-color .2s,transform .1s,box-shadow .2s}
+  #lv .combo:active{transform:scale(.98)}
+  #lv .combo .c-qtd{font-size:14px;font-weight:800;color:var(--soft)}
+  #lv .combo .c-preco{font-size:32px;font-weight:800;line-height:1.05;letter-spacing:-0.02em;color:var(--acc)}
+  #lv .combo .c-de{font-size:13px;color:var(--soft)}
+  #lv .combo .c-ok{display:none;align-items:center;gap:4px;font-size:12px;font-weight:800;color:var(--acc);margin-top:4px}
+  #lv .combo.on{border-color:var(--acc);background:var(--peach)}
+  #lv .combo.on .c-ok{display:flex}
+  #lv .combos-obs{font-size:13px;color:var(--soft);margin-top:8px;line-height:1.4}
 
   /* cartão fidelidade em anel */
   #lv .anel{width:64px;height:64px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
@@ -96,7 +107,7 @@
   #lv .barra .err:not(:empty),#lv .barra .ok{margin-bottom:8px;text-align:center}
 
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-  @media (prefers-reduced-motion:reduce){#lv .card{transition:none}}
+  @media (prefers-reduced-motion:reduce){#lv .card,#lv .combo{transition:none}}
 
   /* ===== TEMA DE HALLOWEEN (liga sozinho pelo JavaScript) ===== */
   body.halloween{background:#120A1C}
@@ -115,8 +126,11 @@
   #lv.halloween #copiar{color:#EADCFF !important}
   #lv.halloween footer a[href*="vitrapi"]{color:#EADCFF !important}
 
-  /* faixa pulsando */
-  #lv.halloween .promo{background:#8BFF2E;color:#120A1C;animation:lv-pulsa 1.8s ease-in-out infinite}
+  /* combos no Halloween: título verde pulsando, cartões roxos */
+  #lv.halloween .combos-tit{display:inline-flex;background:#8BFF2E;color:#120A1C;padding:8px 14px;border-radius:999px;animation:lv-pulsa 1.8s ease-in-out infinite}
+  #lv.halloween .combo{background:#24163A;border-color:#A35CFF}
+  #lv.halloween .combo.on{background:#2E1F47;border-color:#8BFF2E;box-shadow:0 0 18px rgba(139,255,46,.35)}
+  #lv.halloween .combo .c-ok{color:#8BFF2E}
   @keyframes lv-pulsa{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
 
   /* gosma escorrendo */
@@ -133,7 +147,7 @@
   @keyframes lv-bate{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.45)}}
 
   /* quem pediu "menos movimento" no celular não vê animações */
-  @media (prefers-reduced-motion:reduce){.morcegos{display:none}#lv.halloween .promo,#lv .pingo{animation:none}}
+  @media (prefers-reduced-motion:reduce){.morcegos{display:none}#lv.halloween .combos-tit,#lv .pingo{animation:none}}
 </style>
 </head>
 <body>
@@ -152,6 +166,13 @@
       <i class="ti ti-brand-instagram" aria-hidden="true"></i></a>
   </div>
 
+  <!-- COMBOS (em cima de tudo, enquanto COMBOS estiver ligado) -->
+  <section class="combos" id="combos" aria-labelledby="combos-tit" style="display:none">
+    <div class="combos-tit" id="combos-tit"><i class="ti ti-flame" aria-hidden="true"></i><span id="combos-tit-txt">Combos: monte do seu jeito</span></div>
+    <div class="combos-grid" id="combos-grid"></div>
+    <div class="combos-obs" id="combos-obs"></div>
+  </section>
+
   <!-- AVISO DE HORÁRIO -->
   <div class="aviso" id="aviso-horario" role="status" style="display:none">
     <i class="ti ti-clock" aria-hidden="true"></i><span id="aviso-horario-txt"></span>
@@ -165,11 +186,6 @@
       <p id="cartao-status" style="font-size:15px;margin:4px 0 0;line-height:1.35"></p>
     </div>
   </section>
-
-  <!-- FAIXA DA PROMOÇÃO (só aparece nas datas da promoção) -->
-  <div class="promo" id="promo" style="display:none">
-    <i class="ti ti-discount" aria-hidden="true"></i><span id="promo-txt"></span>
-  </div>
 
   <!-- CARDÁPIO -->
   <div class="chips" id="chips" role="group" aria-label="Filtrar sabores"></div>
@@ -276,23 +292,19 @@
     { dias: [2, 3, 4, 5], abre: "19:00", fecha: "22:00" }
   ];
 
-  // Promoção: compre 3 e leve 1 (4 potes), compre 6 e leve 2 (8 potes).
-  // faixas: [a partir de X potes no carrinho, quantos saem grátis], da MAIOR para a menor.
-  // Os potes grátis são sempre os mais baratos do pedido.
-  // ⚠️ Datas e faixas precisam ser iguais às da função calcular_promocao no banco.
-  // Para desligar: const COMBO = null;
-  const COMBO = {
-    nome: "Halloween",
-    de:  "2026-10-24",
-    ate: "2026-10-27",
-    faixas: [[8, 2], [4, 1]],
-    faixa_txt: "🎃 Promoção de Halloween: compre 3 e leve 1 grátis. Compre 6 e leve 2 grátis!"
+  // COMBOS: o cliente escolhe os sabores que quiser (pode repetir) e o desconto entra sozinho.
+  // opcoes: [quantos potes, preço do combo]. O site monta a combinação mais barata
+  // (ex.: 5 potes = 2 combos de 2 + 1 avulso). Os potes mais caros entram no combo.
+  // ⚠️ Os números precisam ser iguais aos que o banco calcula (função no Supabase).
+  // Para desligar: const COMBOS = null;
+  const COMBOS = {
+    opcoes: [[2, 20], [3, 35]]
   };
 
   // Tema de Halloween: liga sozinho entre as datas abaixo.
   // Para ver antes, abra o site com ?tema=halloween no fim do endereço.
   // Para desligar: const TEMA = null;
-  const TEMA = { nome: "halloween", de: "2026-10-24", ate: "2026-10-27", selo: "👻 Assombrado" };
+  const TEMA = { nome: "halloween", de: "2026-10-24", ate: "2026-11-08", selo: "👻 Assombrado" };
 
   const SUPABASE_URL = "https://kbwhmketsipuciygklkg.supabase.co";
   const SUPABASE_KEY = "sb_publishable_SaOAF_gTTG9tqDTo2Dax9g_aZ4NA-JQ";
@@ -308,12 +320,12 @@
   const brl = v => v.toLocaleString("pt-BR", {style:"currency", currency:"BRL", minimumFractionDigits: v % 1 ? 2 : 0});
   $("chave").textContent = CHAVE;
 
-  /* ---------- Datas (promoção e tema) ---------- */
+  /* ---------- Datas (tema) ---------- */
   const hojeISO = () => {
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   };
-  const comboAtivo = () => !!COMBO && hojeISO() >= COMBO.de && hojeISO() <= COMBO.ate;
+  const combosAtivos = () => !!(COMBOS && COMBOS.opcoes && COMBOS.opcoes.length);
   const temaAtivo = () => !!TEMA && (
     new URLSearchParams(location.search).get("tema") === TEMA.nome ||
     (hojeISO() >= TEMA.de && hojeISO() <= TEMA.ate));
@@ -455,6 +467,28 @@
   }
   $("usar-brinde").onclick = () => setBrinde(!usarBrinde);
 
+  /* ---------- Cartões de combo (no topo) ---------- */
+  const OBS_COMBO = "Escolha qualquer sabor no cardápio abaixo, pode repetir. O desconto entra sozinho.";
+  function montarCombos(){
+    if (!combosAtivos()) return;
+    const base = Math.min(...SABORES.map(s => s[2]));   // preço normal de um pote
+    $("combos-grid").innerHTML = COMBOS.opcoes.map(([qtd, preco]) =>
+      `<button class="combo" data-qtd="${qtd}" aria-label="Combo de ${qtd} potes por ${brl(preco)}">
+        <span class="c-qtd">${qtd} potes</span>
+        <span class="c-preco">${brl(preco)}</span>
+        <span class="c-de">em vez de <s>${brl(qtd * base)}</s></span>
+        <span class="c-ok"><i class="ti ti-check" aria-hidden="true"></i>no seu pedido</span>
+      </button>`).join("");
+    $("combos-obs").textContent = OBS_COMBO;
+    $("combos").style.display = "block";
+    $("combos-grid").onclick = e => {
+      const c = e.target.closest(".combo"); if (!c) return;
+      const todos = $("chips").firstChild; if (todos) todos.click();
+      $("menu").scrollIntoView({ behavior: "smooth", block: "center" });
+      $("combos-obs").textContent = `Agora escolha ${c.dataset.qtd} potes no cardápio, do sabor que quiser.`;
+    };
+  }
+
   /* ---------- Cardápio (cards deslizantes) ---------- */
   const menu = $("menu");
   const cards = [], setQtd = [];
@@ -533,6 +567,7 @@
     });
     if (removidos.length) $("e-itens").textContent = `${removidos.join(", ")} acabou de esgotar e saiu do seu pedido.`;
     mostrarRepetir();
+    calc();
   }
   async function carregarEstoque(){
     if (!db) return;
@@ -550,6 +585,31 @@
   }
 
   /* ---------- Conta do pedido ---------- */
+  const soma = l => l.reduce((s, x) => s + x, 0);
+
+  // Acha o jeito mais barato de montar combos com uma lista de preços.
+  // Funciona como "montar a conta de trás pra frente": para cada quantidade de potes,
+  // guarda o menor preço possível e reaproveita esse resultado na próxima.
+  function melhorPreco(precos){
+    const p = precos.slice().sort((a, b) => b - a);   // mais caros primeiro: eles entram no combo
+    const melhor = [{ custo: 0, combos: [] }];
+    for (let k = 1; k <= p.length; k++) {
+      let m = { custo: melhor[k - 1].custo + p[k - 1], combos: melhor[k - 1].combos };
+      if (combosAtivos()) COMBOS.opcoes.forEach(([qtd, preco]) => {
+        if (k >= qtd && melhor[k - qtd].custo + preco < m.custo - 0.009)
+          m = { custo: melhor[k - qtd].custo + preco, combos: [...melhor[k - qtd].combos, qtd] };
+      });
+      melhor.push(m);
+    }
+    return melhor[p.length];
+  }
+
+  // Ex.: [2, 2, 3] vira "2x 2 por R$ 20 + 3 por R$ 35"
+  const resumoCombos = lista => !combosAtivos() ? "" : COMBOS.opcoes.map(([qtd, preco]) => {
+    const v = lista.filter(x => x === qtd).length;
+    return v ? `${v > 1 ? v + "x " : ""}${qtd} por ${brl(preco)}` : null;
+  }).filter(Boolean).join(" + ");
+
   function calc(){
     const n = q.reduce((s, x) => s + x, 0);
     const sub = q.reduce((s, x, i) => s + x * SABORES[i][2], 0);
@@ -559,25 +619,41 @@
     q.forEach((x, i) => { for (let k = 0; k < x; k++) precos.push(SABORES[i][2]); });
     precos.sort((a, b) => a - b);
 
-    // Promoção: os potes grátis são sempre os mais baratos
-    const faixa = comboAtivo() ? COMBO.faixas.find(([min]) => n >= min) : null;
-    const gratisPromo = faixa ? faixa[1] : 0;
-    const descCombo = precos.slice(0, gratisPromo).reduce((s, p) => s + p, 0);
+    // Cartão fidelidade: o pote mais barato sai grátis primeiro
+    const descCartao = (usarBrinde && n) ? precos[0] : 0;
+    const resto = descCartao ? precos.slice(1) : precos;
 
-    // Cartão fidelidade: o próximo pote mais barato que ainda não está grátis
-    const descCartao = (usarBrinde && n > gratisPromo) ? precos[gratisPromo] : 0;
-
-    const gratis = gratisPromo + (descCartao ? 1 : 0);
+    // Combos valem para o resto
+    const pc = melhorPreco(resto);
+    const descCombo = soma(resto) - pc.custo;
     const desc = descCombo + descCartao;
 
-    let txt = n ? `${n} pote${n > 1 ? "s" : ""}${gratis ? `, ${gratis} grátis` : ""}` : "Nenhum pote ainda";
-    // Empurrãozinho: falta 1 pote para a próxima faixa
-    const prox = comboAtivo() && n && COMBO.faixas.find(([min]) => min - n === 1);
-    if (prox) txt = `🎃 Mais 1 pote e ${prox[1]} ${prox[1] > 1 ? "saem" : "sai"} grátis!`;
+    let txt = "Nenhum pote ainda";
+    if (n) {
+      txt = `${n} pote${n > 1 ? "s" : ""}`;
+      if (pc.combos.length) txt += ` · ${pc.combos.length} combo${pc.combos.length > 1 ? "s" : ""}`;
+      if (descCartao) txt += " · 1 grátis";
+    }
+
+    // Empurrãozinho: quanto custa 1 pote a mais (se ficar mais barato que o normal)
+    const disp = SABORES.filter((s, i) => !esgotado[i]).map(s => s[2]);
+    const minPreco = disp.length ? Math.min(...disp) : 0;
+    if (combosAtivos() && n && minPreco) {
+      const extra = melhorPreco([...resto, minPreco]).custo - pc.custo;
+      if (extra < minPreco - 0.009) txt = `${temaAtivo() ? "🎃" : "🔥"} Mais 1 pote por só ${brl(extra)}!`;
+    }
+
+    // Destaca no topo os combos que entraram no pedido
+    document.querySelectorAll("#combos-grid .combo").forEach(c =>
+      c.classList.toggle("on", pc.combos.includes(Number(c.dataset.qtd))));
+    if (combosAtivos()) $("combos-obs").textContent = descCombo
+      ? `Combo aplicado: você economiza ${brl(descCombo)} neste pedido.` : OBS_COMBO;
 
     $("qtd").textContent = txt;
-    $("total").textContent = brl(sub - desc);
-    return { n, sub, desc, descCombo, descCartao, gratisPromo, total: sub - desc };
+    $("total").innerHTML = desc
+      ? `<s style="font-size:16px;color:var(--soft);font-weight:700">${brl(sub)}</s> ${brl(sub - desc)}`
+      : brl(sub);
+    return { n, sub, desc, descCombo, descCartao, combos: pc.combos, total: sub - desc };
   }
 
   /* ---------- Botões de bloco (1 a 7) ---------- */
@@ -662,7 +738,7 @@
 
     try { ["nome","bloco","apto"].forEach(k => localStorage.setItem("lv_" + k, $(k).value.trim())); } catch(e){}
 
-    let { descCombo, descCartao, gratisPromo, total } = calc();
+    let { descCombo, descCartao, combos, total } = calc();
     let descExtra = 0;   // usado só se o banco calcular um desconto diferente do site
     const troco = $("troco").value.trim();
     const foraHorario = avisoHorario();
@@ -730,7 +806,7 @@
     const msg = [
       `*Pedido LV Cakes${pedidoId ? " nº " + pedidoId : ""}*`, "",
       ...itensTxt,
-      ...(descCombo  ? [`Promoção de ${COMBO.nome} (${gratisPromo} grátis): -${brl(descCombo)}`] : []),
+      ...(descCombo  ? [`Combo (${resumoCombos(combos)}): -${brl(descCombo)}`] : []),
       ...(descCartao ? [`Pote grátis do cartão fidelidade: -${brl(descCartao)}`] : []),
       ...(descExtra  ? [`Desconto aplicado: -${brl(descExtra)}`] : []),
       "", `*Total: ${brl(total)}*`, "",
@@ -770,12 +846,6 @@
   $("copiar-codigo").onclick = () => copiar(pixAtual, "copiar-codigo-txt", "Código copiado", "Não deu para copiar, use a chave abaixo");
   $("copiar").onclick = () => copiar(CHAVE, "copiar-txt", "Chave copiada", "Segure a chave para copiar");
 
-  /* ---------- Faixa da promoção ---------- */
-  if (comboAtivo() && $("promo")) {
-    $("promo-txt").textContent = COMBO.faixa_txt;
-    $("promo").style.display = "flex";
-  }
-
   /* ---------- Tema de Halloween ---------- */
   const BATE_ASA = '<path d="M32 12C30 8 28 6 27 4L29 9C24 7 18 6 12 8C10 12 6 14 0 14C6 16 9 20 10 26C14 22 20 21 24 24C26 22 29 21 32 24C35 21 38 22 40 24C44 21 50 22 54 26C55 20 58 16 64 14C58 14 54 12 52 8C46 6 40 7 35 9L37 4C36 6 34 8 32 12Z"/>';
 
@@ -785,6 +855,7 @@
     $("lv").classList.add("halloween");
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.content = "#120A1C";   // pinta a barra do navegador no celular
+    $("combos-tit-txt").textContent = "🎃 Combos assombrados";
 
     // Selo "Assombrado" em todos os bolos
     cards.forEach(card => {
@@ -811,6 +882,8 @@
         <svg viewBox="0 0 64 32" width="${tam}" height="${tam / 2}">${BATE_ASA}</svg></span>`).join("");
     document.body.appendChild(m);
   }
+
+  montarCombos();
   if (temaAtivo()) ligarTema();
 
   saudar();
